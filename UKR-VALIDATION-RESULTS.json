@@ -1,0 +1,49 @@
+{
+  "date": "2026-10-27",
+  "status": "development implementation validated; infrastructure and live certification pending",
+  "tests": {
+    "passed": 51,
+    "failed": 0,
+    "command": "node --test tests/*.test.mjs"
+  },
+  "build": {
+    "files": 33,
+    "uncompressedBytes": 607470
+  },
+  "entrySourceAccounting": {
+    "uncompressedBytes": 164437,
+    "files": [
+      "assets/fonts/4ba7d3d09669.woff2",
+      "assets/fonts/698f9960927e.woff2",
+      "assets/fonts/9964608a8493.woff2",
+      "assets/fonts/e1896b13b2b1.woff2",
+      "assets/fonts/fonts.css",
+      "assets/urban-kanto-icon.svg",
+      "assets/urban-kanto-logo.svg",
+      "dispatch-data.js",
+      "events-data.js",
+      "events.js",
+      "index.html",
+      "manifest.webmanifest",
+      "navigation.js",
+      "player-loader.js",
+      "pwa.js",
+      "radio-player.js",
+      "station-config.js"
+    ],
+    "isNetworkMeasurement": false
+  },
+  "browser": {
+    "engine": "in-app Chromium",
+    "viewports": [
+      320,
+      390,
+      1440
+    ],
+    "singleOuterPlayer": true,
+    "embeddedPlayerScripts": 0,
+    "nestedBackNavigation": "passed",
+    "liveAudioTested": false
+  },
+  "productionChanged": false
+}

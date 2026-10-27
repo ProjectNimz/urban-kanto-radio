@@ -1,0 +1,25 @@
+{
+  "id": "/",
+  "name": "Urban Kanto Radio",
+  "short_name": "Urban Kanto",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#121110",
+  "theme_color": "#121110",
+  "description": "Local roots. Global rhythm.",
+  "icons": [
+    {
+      "src": "/assets/ukr-pwa-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/ukr-pwa-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

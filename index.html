@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Urban Kanto Radio — underground hip-hop, soul, jazz, and global DJ culture. Local roots. Global rhythm.">
+<link rel="icon" href="assets/urban-kanto-icon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#121110">
+<link rel="apple-touch-icon" href="assets/ukr-pwa-192.png">
+<meta name="apple-mobile-web-app-title" content="Urban Kanto">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.webmanifest">
+<script src="station-config.js"></script>
+<title>Urban Kanto Radio — Local roots. Global rhythm.</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+:root{--ink:#121110;--char:#1d1b19;--char2:#2a2724;--cream:#f2e8d5;--mute:#b9ad98;--orange:#e8651f;--orange-d:#b84a10;--line:#3a352f;
+--display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;--body:Figtree,system-ui,sans-serif;--mono:"DM Mono",ui-monospace,Menlo,monospace;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-color-scheme:dark){:root{color-scheme:dark}}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:5.5rem}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--ink);color:var(--cream);font:400 1.0625rem/1.6 var(--body);padding-bottom:var(--player-space,calc(7.5rem + env(safe-area-inset-bottom,0px)))}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:99;opacity:.07;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(1rem,4vw,2.5rem)}
+.mono{font-family:var(--mono);font-size:.78rem;letter-spacing:.04em}
+.mute{color:var(--mute)}
+h1,h2,h3{font-family:var(--display);font-weight:900;line-height:.88;margin:0;text-transform:uppercase;letter-spacing:.005em}
+h2{font-size:clamp(2.8rem,8vw,5.5rem)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:48px;padding:.6rem 1.4rem;border:2px solid var(--cream);background:none;color:var(--cream);font:700 1rem var(--body);text-decoration:none;cursor:pointer;border-radius:2px;transition:background .2s,color .2s,transform .2s}
+.btn:hover{background:var(--cream);color:var(--ink)}
+.btn.pri{background:var(--orange);border-color:var(--orange);color:var(--ink)}
+.btn.pri:hover{background:var(--cream);border-color:var(--cream)}
+.tag{display:inline-block;font:500 .74rem var(--mono);border:1px solid var(--mute);padding:.15rem .5rem;border-radius:99px;color:var(--mute)}
+.sample{font:500 .7rem var(--mono);color:var(--ink);background:var(--cream);padding:.1rem .45rem;border-radius:2px}
+section{padding:clamp(4rem,9vw,7rem) 0}
+.head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:1rem;margin-bottom:2.5rem}
+/* header */
+header{position:sticky;top:0;z-index:50;background:rgba(18,17,16,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px);margin-top:calc(-1*env(safe-area-inset-top,0px))}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:68px}
+.logo{font:900 1.7rem/.85 var(--display);text-transform:uppercase;text-decoration:none;display:flex;gap:.6rem;align-items:center}
+.logo small{display:block;font:500 .6rem var(--mono);letter-spacing:.2em;color:var(--orange)}
+.logo svg{flex:none}
+nav ul{display:flex;gap:.25rem;list-style:none;margin:0;padding:0}
+nav a{display:block;padding:.7rem .9rem;text-decoration:none;font-weight:500}
+nav a:hover{color:var(--orange)}
+.menu-btn{display:none}
+@media(max-width:860px){
+ .menu-btn{display:inline-flex;min-width:48px;padding:.5rem .9rem}
+ nav{position:absolute;left:0;right:0;top:100%;background:var(--ink);border-bottom:1px solid var(--line);display:none}
+ nav.open{display:block}
+ nav ul{flex-direction:column;padding:.5rem 1rem 1rem}
+ nav a{font:900 1.8rem var(--display);text-transform:uppercase;padding:.6rem 0}
+ .bar .btn.pri{display:none}
+}
+/* hero */
+.hero{padding:clamp(2.5rem,6vw,5rem) 0 clamp(3rem,7vw,6rem);position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(1.5rem,4vw,4rem);align-items:center}
+.hero h1{font-size:clamp(4rem,12.5vw,10.5rem)}
+.hero h1 span{display:block}
+.hero h1 .o{color:var(--orange)}
+.hero p{max-width:34rem;font-size:1.2rem;margin:1.8rem 0}
+.cta{display:flex;flex-wrap:wrap;gap:.8rem}
+.art{position:relative;aspect-ratio:1;max-width:520px;width:100%;justify-self:center}
+.art .map{position:absolute;inset:-8%;width:116%;height:116%;opacity:.5}
+.art .disc{position:absolute;inset:6%;animation:spin 24s linear infinite;animation-play-state:paused}
+.playing .disc{animation-duration:6s;animation-play-state:running}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sticker{position:absolute;right:-2%;bottom:6%;background:var(--orange);color:var(--ink);font:900 1.4rem/.9 var(--display);text-transform:uppercase;padding:.7rem .9rem;transform:rotate(-7deg);border-radius:2px;box-shadow:4px 4px 0 var(--cream)}
+.sign{position:absolute;left:-1%;top:4%;background:#1a4d3a;color:var(--cream);font:800 .95rem var(--display);letter-spacing:.12em;text-transform:uppercase;padding:.3rem .8rem;border:2px solid var(--cream);transform:rotate(4deg)}
+@media(max-width:860px){.hero-grid{grid-template-columns:1fr}.art{max-width:360px;order:-1}}
+/* shows */
+.shows{display:grid;grid-template-columns:repeat(12,1fr);gap:1.25rem}
+.show{position:relative;display:flex;flex-direction:column;justify-content:flex-end;min-height:360px;padding:1.4rem;border:1px solid var(--line);overflow:hidden;background:var(--c1);transition:transform .25s}
+.show:hover{transform:translateY(-4px)}
+.show::before{content:"";position:absolute;inset:0;background:radial-gradient(circle,rgba(18,17,16,.55) 22%,transparent 24%) 0 0/9px 9px;mask-image:linear-gradient(160deg,#000 10%,transparent 70%);-webkit-mask-image:linear-gradient(160deg,#000 10%,transparent 70%)}
+.show::after{content:"";position:absolute;right:-18%;top:-14%;width:70%;aspect-ratio:1;border-radius:50%;background:var(--c2);opacity:.9}
+.show>*{position:relative;z-index:1}
+.show h3{font-size:clamp(2.4rem,4.5vw,3.4rem);color:var(--cream);margin:.6rem 0 .4rem;text-shadow:0 2px 0 rgba(0,0,0,.3)}
+.show p{margin:0 0 .8rem;font-size:.98rem;max-width:26rem}
+.show:nth-child(1){grid-column:span 7;min-height:420px}.show:nth-child(2){grid-column:span 5}
+.show:nth-child(3){grid-column:span 5}.show:nth-child(4){grid-column:span 7;min-height:420px}
+.show .tag{color:var(--cream);border-color:var(--cream);background:rgba(18,17,16,.45)}
+.show .top{position:absolute;left:1.4rem;top:1.2rem}
+@media(max-width:760px){.show:nth-child(n){grid-column:1/-1;min-height:320px}}
+/* schedule */
+#schedule{background:var(--char);border-block:1px solid var(--line)}
+.days{display:flex;gap:.4rem;overflow-x:auto;padding-bottom:.4rem;margin-bottom:1.5rem}
+.days button{flex:none;min-width:58px;min-height:48px;padding:.4rem .9rem;background:none;border:1px solid var(--line);color:var(--cream);font:500 .95rem var(--mono);cursor:pointer;border-radius:2px}
+.days button[aria-selected=true]{background:var(--cream);color:var(--ink);border-color:var(--cream)}
+.slot{display:grid;grid-template-columns:9.5rem 1fr auto;gap:1rem;align-items:center;padding:1.1rem 0;border-top:1px solid var(--line)}
+.slot:last-child{border-bottom:1px solid var(--line)}
+.slot time{font:500 .95rem var(--mono);color:var(--orange)}
+.slot b{font:900 1.9rem/1 var(--display);text-transform:uppercase;display:block}
+.slot.now{background:linear-gradient(90deg,rgba(232,101,31,.14),transparent)}
+@media(max-width:620px){.slot{grid-template-columns:1fr auto}.slot time{grid-column:1/-1}}
+/* mixes */
+.mixes{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1.5rem}
+.mix{display:flex;flex-direction:column;gap:.8rem}
+.cover{position:relative;aspect-ratio:1;background:var(--c1);overflow:hidden;border:1px solid var(--line)}
+.cover svg{position:absolute;inset:0;width:100%;height:100%}
+.mix h3{font-size:1.9rem;line-height:.95}
+.mix .row{display:flex;justify-content:space-between;align-items:center;gap:.5rem;flex-wrap:wrap}
+.arch{font:500 .7rem var(--mono);border:1px dashed var(--mute);padding:.1rem .45rem;color:var(--mute)}
+/* community */
+.comm{background:var(--orange);color:var(--ink);position:relative;overflow:hidden}
+.comm h2{font-size:clamp(3.4rem,11vw,9rem)}
+.comm-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:3rem;align-items:end}
+.comm .btn{border-color:var(--ink);color:var(--ink);background:none;justify-content:flex-start;width:100%;font-size:1.1rem}
+.comm .btn:hover{background:var(--ink);color:var(--cream)}
+.comm .acts{display:grid;gap:.7rem}
+.comm :focus-visible{outline-color:var(--ink)}
+@media(max-width:800px){.comm-grid{grid-template-columns:1fr}}
+/* about + footer */
+.about{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,6vw,5rem)}
+.about .def{font:900 clamp(4rem,10vw,8rem)/.85 var(--display);text-transform:uppercase}
+.about .def small{display:block;font:400 1rem var(--mono);color:var(--orange);margin-top:1rem;text-transform:none}
+.about p{max-width:36rem}
+@media(max-width:800px){.about{grid-template-columns:1fr}}
+footer{border-top:1px solid var(--line);padding:3rem 0 2rem;background:var(--char)}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem}
+footer h3{font-size:1.4rem;margin-bottom:.8rem;color:var(--orange)}
+footer ul{list-style:none;margin:0;padding:0}
+footer li a{display:inline-block;padding:.35rem 0}
+form{display:flex;gap:.5rem;flex-wrap:wrap}
+input[type=email]{flex:1 1 180px;min-height:48px;padding:.5rem .8rem;background:var(--ink);border:1px solid var(--mute);color:var(--cream);font:inherit;border-radius:2px}
+.msg{min-height:1.5em;margin:.5rem 0 0;font-size:.9rem}
+/* player */
+#player{position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--cream);color:var(--ink);border-top:4px solid var(--orange);padding:.7rem 0 calc(.7rem + env(safe-area-inset-bottom,0px))}
+.pl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:1rem;align-items:center}
+.pbtn{width:56px;height:56px;border-radius:50%;border:0;background:var(--ink);color:var(--cream);cursor:pointer;display:grid;place-items:center;transition:background .2s}
+.pbtn:hover{background:var(--orange-d)}
+.pbtn svg{width:24px;height:24px;fill:currentColor}
+.status{display:inline-flex;align-items:center;gap:.4rem;font:500 .72rem var(--mono);text-transform:uppercase;letter-spacing:.06em}
+.dot{width:.65rem;height:.65rem;border-radius:50%;background:#777}
+.status.live .dot{background:#c4160a;animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.3}}
+.np{min-width:0}
+.np b{display:block;font:900 1.35rem/1.05 var(--display);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.np span{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vol{display:flex;align-items:center;gap:.5rem}
+.vol input{width:110px;accent-color:var(--orange-d);height:48px}
+@media(max-width:700px){.vol{display:none}.pl{grid-template-columns:auto minmax(0,1fr)}.pbtn{width:52px;height:52px}}
+#player :focus-visible{outline-color:var(--orange-d)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+/* Urban Kanto refinements */
+.hero-grid{grid-template-columns:1.35fr 1fr}
+.hero h1{font-size:clamp(3.6rem,8.5vw,7.6rem);line-height:.92}
+.hero h1 span{white-space:nowrap}
+.hero p{font-size:1.1rem;max-width:32rem}
+.hero{padding-bottom:4rem}
+.hero .art{max-width:440px}
+.mix .btn{margin-top:auto}
+.mix{height:100%}
+.mono{font-size:.84rem}
+.tag{font-size:.8rem}
+.comm .btn{min-height:58px;font-size:1.15rem;justify-content:space-between}
+.comm .btn::after{content:'↗';font-size:1.5rem}
+.sr:focus{position:fixed;top:1rem;left:1rem;width:auto;height:auto;clip:auto;z-index:100;background:var(--cream);color:var(--ink);padding:1rem}
+.show::after{opacity:.45}
+.show-number{position:absolute;right:1rem;top:2.5rem;font:900 clamp(7rem,15vw,13rem)/1 var(--display);color:var(--cream);opacity:.16;letter-spacing:-.06em}
+.show h3{max-width:95%}
+#player .status span{display:inline}
+@media(max-width:860px){.hero-grid{grid-template-columns:1fr}.hero .art{order:0;max-width:300px;margin-top:1rem}.hero h1{font-size:clamp(3.5rem,12vw,6rem)}.hero{padding-bottom:2rem}.hero p{margin:1.3rem 0}.mono{font-size:.8rem}}
+@media(max-width:420px){.hero h1{font-size:12vw}.logo{font-size:1.45rem}.logo small{font-size:.5rem}.wrap{padding-inline:1rem}}
+
+.hero h1 span{white-space:normal;overflow-wrap:normal}
+.hero-grid>*{min-width:0}
+.mix,.show{min-width:0}
+footer li{overflow-wrap:anywhere}
+.days button{touch-action:manipulation}
+@media(max-width:380px){.mixes{grid-template-columns:minmax(0,1fr)}.bar{gap:.5rem}.logo svg{width:32px;height:32px}}
+@media(prefers-reduced-motion:reduce){.playing .disc{animation:none}}
+
+.eyebrow{font:500 .8rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin:0 0 1rem}
+.section-intro{max-width:25rem;margin:0}
+.dispatch-toolbar{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:2rem}
+.filters{display:flex;flex-wrap:wrap;gap:.5rem}
+.filters button{min-height:44px;padding:.5rem .9rem;border:1px solid var(--line);background:none;color:var(--cream);font:500 .85rem var(--body);cursor:pointer}
+.filters button[aria-pressed=true]{background:var(--cream);color:var(--ink);border-color:var(--cream)}
+#dispatch{background:var(--char);border-block:1px solid var(--line)}
+.dispatch-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.25rem 1rem}
+.dispatch-card{border:1px solid var(--line);background:var(--ink);display:flex;flex-direction:column}
+.story-art{position:relative;overflow:hidden;min-height:210px;padding:1.2rem;background:var(--story-color);display:flex;flex-direction:column;justify-content:space-between}
+.story-art::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(-35deg,transparent 0 10px,#12111022 10px 12px);pointer-events:none}
+.story-art strong{font:900 6rem/.9 var(--display);align-self:center;letter-spacing:-.04em;color:var(--cream)}
+.story-copy{padding:1.25rem;display:flex;flex-direction:column;flex:1}
+.story-meta{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin-bottom:1.2rem}
+.story-meta .mono{font-size:.72rem}
+.story-copy h3{font-size:2rem;line-height:1.05}
+.story-copy h3 button{all:unset;cursor:pointer;display:block}
+.story-copy h3 button:hover{color:var(--orange)}
+.story-copy h3 button:focus-visible{outline:3px solid var(--orange);outline-offset:5px}
+.story-copy p{color:var(--mute);font-size:1rem}
+.story-read{margin-top:auto;padding-top:1rem;color:var(--orange)}
+#sessions{background:var(--char);border-block:1px solid var(--line)}
+.sound-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2rem}
+.sound-card{border-top:2px solid var(--orange);padding-top:1.2rem}
+.sound-card .mono{color:var(--mute)}
+.sound-card h3{font-size:2.5rem;line-height:1;margin-top:1.5rem}
+.sound-card p{color:var(--mute)}
+.station-note{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:1.5rem;margin-top:2rem}
+.station-note p{flex:1;min-width:180px;font-size:.95rem;color:var(--mute)}
+.session-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem);align-items:center}
+.session-art{aspect-ratio:1;background:var(--orange);color:var(--ink);padding:2rem;display:flex;flex-direction:column;justify-content:space-between;border:1px solid var(--orange)}
+.session-title{font:900 clamp(3.5rem,7vw,6.5rem)/.88 var(--display)}
+.session-title em{font-style:normal;color:var(--cream)}
+.session-grid h2{font-size:clamp(2.8rem,6vw,5rem)}
+.selector-photo{margin:1.25rem 0}.selector-photo img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;border:1px solid var(--line)}.selector-photo figcaption{font-size:.65rem;margin-top:.45rem;line-height:1.5}
+#storyDialog{background:var(--char);color:var(--cream);border:1px solid var(--line);width:min(640px,calc(100% - 2rem));max-height:85dvh;padding:clamp(1.5rem,4vw,3rem);overflow:auto}
+#storyDialog::backdrop{background:#000b;backdrop-filter:blur(4px)}
+#storyDialog h2{font-size:clamp(2.5rem,7vw,4rem);line-height:1}
+.dialog-close{display:flex;margin:0 0 2rem auto;min-height:44px}
+@media(max-width:1050px){.dispatch-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.dispatch-grid,.sound-grid,.session-grid{grid-template-columns:1fr}.story-art{min-height:180px}.session-art{max-width:420px;width:100%;justify-self:center}.dispatch-toolbar>.mono{font-size:.75rem}.session-title{font-size:4.5rem}}
+
+.story-copy h3 a{text-decoration:none;display:block}
+.story-copy h3 a:hover{color:var(--orange)}
+.story-source{font-size:.85rem!important}
+.feed-empty{grid-column:1/-1;padding:2rem;border:1px dashed var(--line)}
+.feed-empty h3{font-size:2rem;line-height:1.1}
+
+.story-art{aspect-ratio:16/10;min-height:0}
+.story-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+.story-art:has(.story-photo)::after{z-index:2;background:linear-gradient(transparent 40%,#0009)}
+.story-art:has(.story-photo)>span{z-index:3;text-shadow:0 1px 4px #000}
+.story-art:has(.story-photo)>strong{visibility:hidden}
+
+.brand-logo{display:block;width:230px;height:72px;max-width:100%;object-fit:contain}
+.bar{min-height:84px}
+@media(max-width:420px){.brand-logo{width:190px;height:60px}.bar{min-height:72px}}
+
+/* Claude identity trial. Original SVG artwork retained in assets/. */
+.brand-logo{width:320px;height:68px;object-fit:cover;object-position:center;background:var(--cream);border-radius:2px}
+.bar{min-height:90px}
+.about-brand img{display:block;width:100%;height:auto}
+.about-brand p{margin:1rem 0 0}
+.pl{grid-template-columns:auto auto minmax(0,1fr) auto}
+.player-mark{border-radius:50%;display:block}
+@media(max-width:1100px){.brand-logo{width:270px;height:58px}nav a{padding-inline:.55rem}.bar>.btn.pri{padding-inline:1rem}}
+@media(max-width:860px){.brand-logo{width:300px;height:64px}.bar{min-height:84px}}
+@media(max-width:700px){.pl{grid-template-columns:auto auto minmax(0,1fr)}.player-mark{width:40px;height:40px}.pl{gap:.7rem}}
+@media(max-width:420px){.brand-logo{width:240px;height:52px}.bar{min-height:72px}.menu-btn{min-width:44px;padding:.5rem}.logo{min-width:0}}
+@media(max-width:350px){.brand-logo{width:205px;height:46px}.player-mark{display:none}.pl{grid-template-columns:auto minmax(0,1fr)}}
+
+/* Original vector wordmark restored for the header only. */
+.brand-logo{width:230px;height:72px;object-fit:contain;background:transparent;border-radius:0}
+.bar{min-height:84px}
+@media(max-width:420px){.brand-logo{width:190px;height:60px}.bar{min-height:72px}}
+
+/* Original site branding; current header preserved. */
+.pl{grid-template-columns:auto minmax(0,1fr) auto}
+@media(max-width:700px){.pl{grid-template-columns:auto minmax(0,1fr);gap:1rem}}
+
+/* Compact station player. Keep one clear status and remove repeated demo copy. */
+#player{padding:.55rem 0 calc(.55rem + env(safe-area-inset-bottom,0px));border-top-width:2px}
+.pbtn{width:44px;height:44px}
+.pbtn svg{width:20px;height:20px}
+.np{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.np b{order:0;font-size:1.2rem}
+.np .status{order:1;font-size:.68rem;letter-spacing:.02em;gap:.35rem}
+.np .status span{font-size:inherit}
+.np>span{order:2;flex-basis:100%;font-size:.8rem}
+.np>span:empty{display:none}
+.dot{width:.45rem;height:.45rem}
+.vol input{width:82px;height:36px}
+@media(max-width:700px){.pbtn{width:42px;height:42px}.np{gap:.3rem .7rem}.np b{font-size:1.1rem}.np .status{font-size:.62rem}}
+
+/* Desktop editorial polish: consistent image and card rhythm, complete readable headlines. */
+.dispatch-card{min-width:0;transition:border-color .2s}
+.dispatch-card:hover{border-color:#756451}
+.story-copy{gap:.25rem}
+.story-copy h3{font-size:clamp(1.65rem,2.4vw,2rem);line-height:1.1;overflow-wrap:anywhere}
+.story-art{background:var(--story-color);isolation:isolate}
+.story-meta{margin-bottom:.8rem;gap:.5rem}
+.story-source{line-height:1.5;margin:.9rem 0 1rem}
+.story-read{display:block;min-height:44px;align-content:center;text-underline-offset:4px}
+/* Compact four-column desktop Dispatch; mobile list overrides remain below. */
+@media(min-width:651px){
+ #dispatch{padding-block:clamp(2.5rem,5vw,4rem)}
+ #dispatch .head{margin-bottom:1.5rem}
+ .dispatch-toolbar{margin-bottom:1.15rem;gap:.75rem}
+ .story-art{aspect-ratio:16/9;padding:.8rem}
+ .story-art strong{font-size:4rem}
+ .story-art>.mono{font-size:.64rem}
+ .story-copy{padding:.9rem;gap:.15rem}
+ .story-meta{gap:.35rem;margin-bottom:.6rem}
+ .story-meta .tag{font-size:.64rem;padding:.1rem .4rem}
+ .story-meta .mono{font-size:.64rem}
+ .story-copy h3{font-size:clamp(1.4rem,1.75vw,1.7rem);line-height:1.08}
+ .story-source{font-size:.78rem!important;line-height:1.4;margin:.65rem 0 .25rem}
+ .story-read{font-size:.7rem;padding-top:.4rem}
+}
+
+[hidden]{display:none!important}
+@media(min-width:861px) and (max-width:1120px){nav a{padding-inline:.5rem}.bar>.btn.pri{font-size:.9rem;padding-inline:.8rem}.bar{gap:.7rem}}
+
+/* Shorter mobile reading flow, keeping comfortable text and touch targets. */
+.mobile-more{display:none}
+@media(max-width:650px){
+ section{padding:2.5rem 0}
+ .wrap{padding-inline:1.1rem}
+ .bar{min-height:66px}
+ .brand-logo{width:185px;height:54px}
+ .head{gap:.75rem;margin-bottom:1.25rem}
+ h2{font-size:2.6rem;line-height:.95}
+ .hero{padding-top:1.75rem!important;padding-bottom:1.75rem}
+ .hero-grid{grid-template-columns:minmax(0,1fr);gap:0}
+ .hero h1{font-size:clamp(3rem,11.8vw,4.5rem);line-height:.94}
+ .hero p{font-size:1rem;line-height:1.5;margin:1rem 0}
+ .hero .art{display:none}
+ .cta{gap:.6rem}.cta .btn{font-size:.88rem;padding-inline:1rem}
+ .section-intro{font-size:.95rem;line-height:1.5}
+ .dispatch-toolbar{gap:.75rem;margin-bottom:1rem}
+ .filters{gap:.35rem;flex-wrap:nowrap;overflow-x:auto;width:100%;padding-bottom:.25rem}
+ .filters button{flex:none;font-size:.8rem;padding:.45rem .65rem}
+ .dispatch-toolbar>#feedStatus{font-size:.65rem}
+ .dispatch-grid{gap:.75rem}
+ .dispatch-card{display:grid;grid-template-columns:90px minmax(0,1fr)}
+ .story-art{height:100%;min-height:125px;aspect-ratio:auto;padding:.5rem}
+ .story-art>span{display:none}.story-art strong{font-size:2rem;margin:auto}
+ .story-photo{object-position:center}
+ .story-copy{padding:.8rem;gap:0}
+ .story-meta{gap:.35rem;margin-bottom:.5rem}.story-meta .tag{font-size:.62rem;padding:.05rem .35rem}.story-meta time{font-size:.62rem}
+ .story-copy h3{font-size:1.3rem;line-height:1.08;overflow-wrap:normal}
+ .story-source{font-size:.72rem!important;margin:.6rem 0 0}
+ .story-read{font-size:.68rem;padding-top:.3rem;min-height:38px}
+ #dispatchGrid:not(.expanded)>.dispatch-card:nth-child(n+4){display:none}
+ .mobile-more:not([hidden]){display:flex;width:100%;margin-top:1rem;font-size:.9rem}
+ .sound-grid{gap:1rem}
+ .sound-card{padding-top:.75rem}
+ .sound-card h3{font-size:1.7rem;line-height:1;margin-top:.5rem}
+ .sound-card h3 br{display:none}.sound-card h3 br::after{content:' '}
+ .sound-card .mono{font-size:.65rem}.sound-card p{font-size:.9rem;line-height:1.5;margin:.6rem 0 0}
+ .station-note{gap:.6rem;margin-top:1rem;padding-top:1rem}.station-note p{margin:.3rem 0}
+ .session-grid{gap:1rem}.session-art{aspect-ratio:auto;padding:1rem;max-width:none;display:block}
+ .session-art>.mono{font-size:.65rem}.session-art>.mono:last-child{display:none}
+ .session-title{font-size:2.2rem;line-height:1;margin:.5rem 0 0}.session-title br{display:none}
+ .session-grid h2{font-size:2.6rem}.session-grid p{font-size:.95rem;line-height:1.5}
+ .comm-grid{gap:1rem}.comm h2{font-size:3.2rem}.comm h2 br{display:none}
+ .comm-grid>div>p{font-size:1rem!important;margin-top:1rem!important}
+ .comm .acts{gap:.5rem}.comm .btn{min-height:48px;font-size:.95rem}
+ .about{gap:1rem}.about .def{font-size:3.2rem}.about .def small{font-size:.75rem;margin-top:.65rem}
+ .about p{font-size:.95rem;line-height:1.5;margin:.6rem 0}
+ footer{padding:1.75rem 0}.fgrid{gap:1.25rem}.fgrid h3{margin-bottom:.5rem}
+}
+
+/* Mobile opens directly on Dispatch; desktop retains the station hero. */
+@media(max-width:650px){
+ .hero{display:none}
+ #dispatch{padding-top:1.5rem}
+ nav a[href="#listen"]{display:none}
+}
+
+/* Kanto Events */
+#events{background:var(--ink)}
+#eventPicks .event-art{--story-color:#7a2e0e}
+.event-fallback{position:absolute;width:42%;height:80%;object-fit:contain;inset:10% 29%;opacity:.75}
+.event-invite .story-art>span{position:relative;z-index:1}
+@media(max-width:650px){.event-fallback{width:76%;height:70%;inset:15% 12%}}
+#eventPicks .event-preview:nth-child(even) .event-art{--story-color:#2c3a4a}
+#eventPicks>.mute{grid-column:1/-1;margin:0}
+@media(min-width:651px){#events{padding-block:clamp(2.5rem,5vw,4rem)}#events .head{margin-bottom:1.5rem}}
+.event-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:1.25rem}
+.event-card{border:1px solid var(--line);background:var(--ink);display:flex;flex-direction:column;min-width:0}
+.event-date{padding:1.25rem;border-bottom:1px solid var(--line);background:linear-gradient(120deg,#e8651f1f,transparent)}
+.event-date .eyebrow{display:block;margin:0 0 .65rem}.event-date strong{display:block;font:900 1.8rem/1.1 var(--display);text-transform:uppercase}.event-date>.mono{display:block;margin-top:.5rem;color:var(--mute);font-size:.7rem}
+.event-body{padding:1.25rem;display:flex;flex-direction:column;flex:1}.event-body h3{font-size:2rem;line-height:1.05}.event-body p{font-size:.95rem}.event-location{color:var(--cream)}.event-body>p:not(.event-location){color:var(--mute)}
+.event-actions{display:grid;gap:1rem;margin-top:auto}.event-actions .btn{font-size:.9rem;padding:.65rem .8rem}.event-source{font-size:.8rem;text-underline-offset:3px}.event-checked{font-size:.7rem!important;margin-bottom:0}
+.event-note{max-width:55rem;font-size:.9rem;color:var(--mute);margin:1.5rem 0 0}
+.event-hero{padding-bottom:2rem}.event-hero h1{font-size:clamp(3.2rem,9vw,7rem)}.event-hero p{max-width:44rem}
+.event-controls{display:flex;gap:1rem;flex-wrap:wrap;align-items:end;margin-bottom:1.5rem}.event-controls label{display:grid;gap:.4rem;font-size:.85rem}.event-controls select{min-height:48px;background:var(--char);color:var(--cream);border:1px solid var(--line);padding:.65rem 2rem .65rem .8rem;font:inherit}.event-controls option{background:var(--ink)}
+@media(max-width:1000px){.event-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.event-grid{grid-template-columns:1fr;gap:.75rem}.event-date,.event-body{padding:1rem}.event-date strong{font-size:1.5rem}.event-body h3{font-size:1.6rem}.event-body p{margin:.65rem 0}.event-controls{gap:.65rem}.event-controls label{flex:1;min-width:140px}.event-controls select{width:100%}.event-hero{padding:1.5rem 0 1rem}.event-note{font-size:.8rem}}
+
+
+
+/* Connected selector feature: shared edges, photo first, compact biography. */
+.selector-feature{display:grid;grid-template-columns: .85fr 1.15fr;border:1px solid var(--line);background:var(--ink);align-items:stretch}
+.selector-feature .session-art{aspect-ratio:auto;min-width:0;padding:2rem;border:0;gap:3rem}
+.selector-feature .session-title{font-size:clamp(3.5rem,6.8vw,6.5rem)}
+.selector-profile{min-width:0}.selector-feature .selector-photo{margin:0;position:relative}
+.selector-feature .selector-photo img{border:0;aspect-ratio:16/10;width:100%;height:auto}
+.selector-feature .selector-photo figcaption{position:absolute;bottom:.5rem;right:.75rem;margin:0;padding:.25rem .4rem;background:#121110dd;color:var(--cream);font-size:.6rem}
+.selector-copy{padding:1.5rem 2rem}.selector-copy .eyebrow{margin:0 0 .65rem}
+.selector-copy h2{font-size:clamp(2.8rem,4.4vw,4.5rem);line-height:.95;margin:0}
+.selector-copy h2 span{font-size:.65em}.selector-copy>p:not(.eyebrow):not(.selector-credit){font-size:.95rem;line-height:1.6;max-width:36rem;margin:1rem 0}
+.selector-copy .btn{min-height:44px}.selector-copy .selector-credit{font-size:.65rem;margin:1rem 0 0}
+@media(max-width:650px){.selector-feature{grid-template-columns:1fr}.selector-feature .session-art{display:flex;padding:1rem;gap:.65rem}.selector-feature .session-title{font-size:2.2rem;margin:0}.selector-feature .session-title br{display:none}.selector-feature .session-art>.mono:last-child{display:none}.selector-copy{padding:1.1rem}.selector-copy h2{font-size:2.8rem}.selector-feature .selector-photo img{aspect-ratio:16/10}}
+
+
+/* Mobile discovery edition. Desktop keeps its approved section order. */
+#mobileStation{display:none}
+@media(max-width:650px){
+ #mobileStation{display:block;padding:1.65rem 0 1.8rem;background:var(--ink)}
+ #mobileStation .eyebrow{font-size:.65rem;margin:0 0 .8rem}
+ #mobileStation h1{font-size:clamp(2.5rem,12vw,3.5rem);line-height:.98}
+ #mobileStation h1 span{color:var(--orange)}
+ #mobileStation p:not(.eyebrow){font-size:.95rem;line-height:1.55;max-width:22rem;margin:1rem 0}
+ .mobile-tune{display:flex;align-items:center;gap:.85rem;flex-wrap:wrap}.mobile-tune .mono{font-size:.6rem}
+ main>section{padding-block:2rem}.wrap{padding-inline:1.25rem}
+ #sessions{padding-block:1.5rem 2rem}#dispatch{background:var(--ink);padding-block:2rem;border:0}#events{background:var(--char);border-block:1px solid var(--line)}
+ .selector-feature .session-art{padding:.85rem 1rem;gap:.45rem}.selector-feature .session-art>.mono{font-size:.58rem}
+ .selector-feature .session-title{font-size:1.85rem}.selector-copy{padding:1.15rem}.selector-copy h2{font-size:2.5rem}
+ .selector-copy .eyebrow{font-size:.6rem;line-height:1.6}.selector-copy .selector-credit{line-height:1.6}
+ #dispatch .head{margin-bottom:1.1rem}#dispatch .section-intro{display:none}
+ .dispatch-toolbar>#feedStatus{display:none}.filters{gap:.4rem}.filters button{min-height:44px;font-size:.75rem}
+ .dispatch-card{grid-template-columns:78px minmax(0,1fr)}.story-copy{padding:1rem}.story-copy h3{font-size:1.35rem;line-height:1.15}
+ .story-art{min-height:125px}.story-meta .tag{font-size:.6rem}.story-source{line-height:1.5}
+ #dispatchGrid:not(.expanded)>.dispatch-card:nth-child(n+3){display:none}
+ #eventPicks>.event-preview:nth-child(n+3),#eventPicks>.event-invite~.event-invite{display:none}
+ #events .head{align-items:center}#events .head>.btn{font-size:.8rem;padding:.55rem .7rem;min-height:44px}
+ #events h2{font-size:2.3rem}#events .event-note{font-size:.8rem;line-height:1.65}
+ .np{display:block;min-width:0}.np b{display:block;font-size:1.05rem}.np .status{font-size:.6rem}.np>span{font-size:.75rem}
+}
+
+
+/* Tighter mobile cards, with full headlines and comfortable link targets. */
+@media(max-width:650px){
+ .dispatch-grid{gap:.6rem}
+ .dispatch-card{grid-template-columns:72px minmax(0,1fr)}
+ .story-art{min-height:105px}
+ .story-copy{padding:.7rem .8rem}
+ .story-meta{margin-bottom:.35rem;gap:.25rem}
+ .story-copy h3{font-size:1.25rem;line-height:1.12}
+ .story-source{margin:.35rem 0 0;font-size:.7rem!important;line-height:1.4}
+ .story-read{padding-top:.15rem;min-height:44px;font-size:.65rem}
+ .selector-feature .session-art{padding:.65rem .85rem;gap:.35rem}
+ .selector-feature .session-title{font-size:1.7rem}
+ .selector-feature .selector-photo img{aspect-ratio:16/9;object-position:center 55%}
+ .selector-copy{padding:.85rem 1rem}
+ .selector-copy h2{font-size:2.3rem}
+ .selector-copy .eyebrow{margin-bottom:.45rem}
+ .selector-copy>p:not(.eyebrow):not(.selector-credit){font-size:.9rem;margin:.7rem 0;line-height:1.5}
+ .selector-copy .selector-credit{margin-top:.65rem;font-size:.6rem}
+ .selector-copy .btn{font-size:.85rem;padding:.5rem .85rem}
+}
+
+#backToTop{position:fixed;right:1rem;bottom:calc(var(--player-space,90px) + .75rem);z-index:59;width:44px;height:44px;display:grid;place-items:center;border:2px solid var(--ink);border-radius:50%;background:var(--orange);color:var(--ink);box-shadow:0 3px 12px #0005;cursor:pointer}
+#backToTop[hidden]{display:none}#backToTop:hover{background:var(--orange);color:var(--ink)}#backToTop svg{width:21px;height:21px}
+html.ukr-embedded #backToTop{display:none}
+html.ukr-embedded header,html.ukr-embedded footer,html.ukr-embedded #player{display:none}
+html.ukr-embedded body{padding:0}
+html.ukr-embedded main>section:first-child{padding-top:1.2rem}
+body.ukr-route-open{overflow:hidden}
+#ukrRoute{position:fixed;inset:78px 0 calc(var(--player-space,100px) - 24px);z-index:60;background:var(--ink);padding:.5rem max(1rem,calc((100vw - 1240px)/2));display:flex;flex-direction:column;gap:.4rem}
+#ukrRoute>.btn{align-self:flex-start;min-height:40px;font-size:.85rem;padding:.3rem .8rem}
+#ukrRoute iframe{width:100%;flex:1;min-height:0;border:0;background:var(--ink)}
+@media(max-width:650px){#ukrRoute{top:67px;bottom:calc(var(--player-space,78px) - 24px);padding:.3rem .5rem}}
+
+/* Phone browser alignment: shared gutters, measured header, and safe-area clearance. */
+@media(max-width:860px){
+ header{z-index:70;-webkit-backdrop-filter:blur(8px)}
+ header .bar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.75rem;min-height:66px}
+ header .logo{min-width:0;justify-self:start}
+ header .brand-logo{width:clamp(160px,48vw,220px);height:54px;object-fit:contain}
+ header .menu-btn{min-width:60px;min-height:44px;padding:.5rem .65rem;justify-self:end;font-size:.9rem}
+ header .wrap,#player .wrap{padding-left:max(1.25rem,env(safe-area-inset-left,0px));padding-right:max(1.25rem,env(safe-area-inset-right,0px))}
+ header nav{max-height:calc(100vh - var(--header-space,67px) - (var(--player-space,100px) - 24px));max-height:calc(100dvh - var(--header-space,67px) - (var(--player-space,100px) - 24px));overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+ header nav ul{padding:.5rem max(1.25rem,env(safe-area-inset-left,0px)) .75rem}
+ header nav a{min-height:44px;display:flex;align-items:center;font-size:1.5rem;line-height:1.2;padding:.65rem 0}
+ #ukrRoute{top:var(--header-space,67px)}
+ html{scroll-padding-top:calc(var(--header-space,67px) + 12px)}
+}
+@media(max-width:700px){
+ #player .pl{grid-template-columns:44px minmax(0,1fr);gap:.8rem;align-items:center}
+ #player .pbtn{width:44px;height:44px;padding:0;flex-shrink:0}
+ #player .np{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:.2rem;min-width:0}
+ #player .np b{order:1;font-size:1.1rem;line-height:1.15;width:100%}
+ #player .np .status{order:0;font-size:.6rem;line-height:1.3;max-width:100%;flex-wrap:wrap}
+ #player .np>span{order:2;font-size:.75rem;line-height:1.35;max-width:100%;flex-basis:auto}
+ #backToTop{right:max(1rem,env(safe-area-inset-right,0px))}
+}
+
+
+.ukr-offline-status{margin:0;padding:.6rem 1.25rem;background:var(--char);color:var(--cream);border-bottom:1px solid var(--orange);font-size:.85rem;line-height:1.5}
+.pwa-install{grid-column:1/-1;border-top:1px solid var(--line);padding-top:1rem;max-width:38rem}.pwa-install summary{cursor:pointer;min-height:44px;align-content:center;color:var(--cream);font-weight:600}.pwa-install p{font-size:.9rem;color:var(--mute)}.pwa-install .btn{margin:.5rem 0}
+@media(display-mode:standalone){.pwa-install{display:none}}
+</style>
+</head>
+<body id="top">
+<a class="sr" href="#main">Skip to content</a>
+<header>
+ <div class="wrap bar">
+  <a class="logo" href="#top" aria-label="Urban Kanto Radio, home">
+   <img class="brand-logo" src="assets/urban-kanto-logo.svg" width="230" height="72" alt="Urban Kanto Radio">
+  </a>
+  <nav id="nav" aria-label="Main">
+   <ul><li><a href="#listen">Listen</a></li><li><a href="#dispatch">Dispatch</a></li><li><a href="events.html">Events</a></li><li><a href="#sessions">Featured Artist</a></li><li><a href="#about">About</a></li></ul>
+  </nav>
+  <button class="btn pri" data-listen>Listen to the station</button>
+  <button class="btn menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav">Menu</button>
+ </div>
+</header>
+
+<main id="main">
+<section id="mobileStation" aria-label="Welcome to Urban Kanto Radio"><div class="wrap"><p class="eyebrow">Independent radio. Filipino roots.</p><h1>Local roots.<br><span>Global rhythm.</span></h1><p>Underground hip-hop, soulful cuts, and your next discovery.</p><div class="mobile-tune"><button class="btn pri" data-listen>Listen to UKR</button><span class="mono mute">Stream coming soon</span></div></div></section>
+<section class="hero" id="listen" style="padding-top:clamp(2.5rem,6vw,5rem)"><div class="wrap hero-grid">
+ <div>
+  <h1><span>From the</span><span class="o">Kanto.</span><span>To the world.</span></h1>
+  <p>Underground hip-hop, soulful selections, and fresh discoveries. Rooted in Filipino community. Connected through music.</p>
+  <div class="cta"><button class="btn pri" data-listen>Listen to the station</button><a class="btn" href="#dispatch">Explore the Dispatch ↗</a></div>
+ </div>
+ <div class="art" aria-hidden="true">
+  <svg class="map" viewBox="0 0 400 400" fill="none" stroke="#f2e8d5" stroke-width="1.2"><path d="M0 120h400M0 250h400M70 0v400M210 0v400M330 0v400M0 360L400 40M120 400L400 190" stroke-dasharray="2 6"/><rect x="215" y="125" width="110" height="120" stroke-dasharray="none" opacity=".4"/></svg>
+  <svg class="disc" viewBox="0 0 200 200"><defs><radialGradient id="g"><stop offset="0" stop-color="#2a2724"/><stop offset="1" stop-color="#0b0a09"/></radialGradient></defs>
+   <circle cx="100" cy="100" r="98" fill="url(#g)" stroke="#3a352f"/>
+   <g fill="none" stroke="#3a352f" stroke-width=".6"><circle cx="100" cy="100" r="90"/><circle cx="100" cy="100" r="80"/><circle cx="100" cy="100" r="70"/><circle cx="100" cy="100" r="60"/></g>
+   <path d="M100 100 L100 4 A96 96 0 0 1 180 46Z" fill="#f2e8d5" opacity=".07"/>
+   <circle cx="100" cy="100" r="40" fill="#e8651f"/>
+   <path id="arc" d="M100 100m-30 0a30 30 0 1 1 60 0a30 30 0 1 1-60 0" fill="none"/>
+   <text font-family="DM Mono,monospace" font-size="7" fill="#121110" letter-spacing="1.6"><textPath href="#arc">URBAN KANTO RADIO · SIDE A · 33⅓ RPM ·</textPath></text>
+   <circle cx="100" cy="100" r="5" fill="#121110"/></svg>
+  <div class="sign">Kanto St.</div>
+  <div class="sticker">Local roots.<br>Global rhythm.</div>
+ </div>
+</div></section>
+
+<section id="dispatch"><div class="wrap">
+ <div class="head"><div><p class="eyebrow">Notes from the underground</p><h2>Kanto Dispatch</h2></div><p class="mute section-intro">Filipino roots. Worldwide ears. Releases, discoveries, and the scenes moving music forward.</p></div>
+ <div class="dispatch-toolbar"><div class="filters" role="group" aria-label="Filter Dispatch stories"><button aria-pressed="true" data-filter="all">All stories</button><button aria-pressed="false" data-filter="pinoy">Pinoy scene</button><button aria-pressed="false" data-filter="worldwide">Worldwide</button><button aria-pressed="false" data-filter="releases">Releases</button></div><span class="mono mute" id="feedStatus" role="status">Loading music headlines…</span></div>
+ <p id="storyCount" class="sr" role="status"></p><div class="dispatch-grid" id="dispatchGrid"></div><button class="btn mobile-more" id="moreStories" aria-expanded="false" aria-controls="dispatchGrid" hidden>More discoveries</button>
+ <noscript><p>Read music discoveries at <a href="https://daily.bandcamp.com/">Bandcamp Daily</a> and <a href="https://www.bandwagon.asia/">Bandwagon</a>. Enable JavaScript for the latest headlines.</p></noscript>
+</div></section>
+
+<section id="events"><div class="wrap"><div class="head"><div><p class="eyebrow">Out of the headphones. Into the city.</p><h2>Kanto Events</h2></div><a class="btn" href="events.html">See all events ↗</a></div><div class="dispatch-grid" id="eventPicks"></div><p class="event-note">Philippine hip-hop gigs, cyphers, beat showcases, and hip-hop DJ nights, checked against official sources. Independent listings, not Urban Kanto productions. Always check the organizer for changes. <a href="mailto:urbankantoradio@gmail.com?subject=Kanto%20Events%20submission">Promoting a show? Send us the date, venue, lineup, official link, and poster.</a> Submissions are reviewed before listing.</p><noscript><p><a href="events.html">Visit the event guide</a> for official event sources.</p></noscript></div></section>
+
+
+
+
+
+<section id="sessions"><div class="wrap"><div class="selector-feature">
+ <div class="session-art" aria-hidden="true"><span class="mono">URBAN KANTO / SELECTOR SPOTLIGHT</span><div class="session-title">NEXT <br>ON THE <br><em>DECKS.</em></div><span class="mono">YOUR CITY. YOUR SELECTION.</span></div>
+ <div class="selector-profile"><figure class="selector-photo"><img src="assets/dj-koco-decks.jpg" alt="DJ KOCO wearing headphones while mixing vinyl on two turntables." width="1024" height="640" loading="lazy" decoding="async"><figcaption class="mono mute">Photo source: <a href="https://www.mojo.de/news/dj-koco-ben/" target="_blank" rel="noopener noreferrer">Mojo Club / Beyond ↗<span class="sr"> (new tab)</span></a></figcaption></figure><div class="selector-copy"><p class="eyebrow">Featured selector / Tokyo, Japan</p><h2>DJ KOCO<br><span>aka SHIMOKITA.</span></h2><p>Small records. Heavy skills. A hip-hop approach to 7-inch vinyl, connecting funk, soul, and deep crate discoveries through sharp cuts and inventive mixing.</p><a class="btn" href="https://linktr.ee/DJKOCO" target="_blank" rel="noopener noreferrer">Explore DJ KOCO ↗<span class="sr"> (official links, new tab)</span></a><p class="selector-credit mono mute">UKR editorial pick · <a href="https://flower-r.com/artist-dj-koco-aka-shimokita/" target="_blank" rel="noopener noreferrer">Artist profile ↗<span class="sr"> (new tab)</span></a></p></div></div>
+</div></div></section>
+
+
+<section class="comm" id="community"><div class="wrap comm-grid">
+ <div><h2>Your corner.<br>Your sound.</h2><p style="max-width:30rem;font-size:1.15rem;margin-top:1.5rem">The kanto is where people stop, swap stories, and pass along a record. Bring a story, suggest an artist, or take a guest turn behind the decks.</p></div>
+ <div class="acts"><a class="btn" href="mailto:urbankantoradio@gmail.com?subject=Artist%20or%20story%20suggestion">Suggest an artist or story</a><a class="btn" href="mailto:urbankantoradio@gmail.com?subject=Guest%20DJ%20session">Become a guest DJ</a><a class="btn" href="mailto:urbankantoradio@gmail.com">Connect with us</a><a class="btn" href="community.html">Kanto Community</a></div>
+</div></section>
+
+<section id="about"><div class="wrap about">
+ <div class="def">Kanto<small>/kan·to/ Filipino, noun: street corner</small></div>
+ <div>
+  <p>In the Philippines, the kanto is the corner where neighbors gather: a place to trade stories, share food, and hear something new coming from a speaker down the block.</p>
+  <p>Urban Kanto Radio is an independent online station built on that idea. We play underground hip-hop, soul, jazz, R&amp;B, and the DJ sets that connect them, and we welcome listeners from every city.</p>
+  <p class="mute mono">Music first. Community always. Built for curious ears, wherever you call home.</p>
+ </div>
+</div></section>
+</main>
+
+<footer id="contact"><div class="wrap fgrid">
+ <div><h3>Contact</h3><ul><li><a href="mailto:urbankantoradio@gmail.com">urbankantoradio@gmail.com</a></li></ul></div>
+ <div id="socialSection" hidden><h3>Follow the signal</h3><ul id="socialLinks"></ul></div>
+ <div><h3>Newsletter</h3>
+  <form id="news" novalidate><label class="sr" for="em">Email address</label><input id="em" type="email" placeholder="you@example.com" autocomplete="email"><button class="btn pri" type="submit">Sign up</button></form>
+  <p class="msg" id="nmsg" role="status"></p></div>
+ <details class="pwa-install" id="pwaInstall"><summary>Keep UKR on your home screen</summary><p>Open the station like an app, straight from your phone.</p><button class="btn" id="installApp" type="button" hidden>Install Urban Kanto</button><p><strong>iPhone / Safari:</strong> Open the browser menu, choose Share, then Add to Home Screen. Turn on “Open as Web App” if offered.</p><p><strong>Android / Chrome:</strong> Open the browser menu and choose Add to home screen or Install app.</p><p>Live radio needs an internet connection. Pages you’ve visited may still be available offline.</p></details>
+ <div style="grid-column:1/-1" class="mono mute">© Urban Kanto Radio. Local roots. Global rhythm. Dispatch headlines link to their original publishers. Stream and guest sessions are coming soon.</div>
+</div></footer>
+
+<div id="player" role="region" aria-label="Radio player"><div class="wrap pl">
+ <button class="pbtn" id="play" aria-label="Play"><svg id="ico" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg></button>
+ <div class="np">
+  <div class="status" id="status"><i class="dot"></i><span id="stxt">Coming soon</span><button id="playerRetry" type="button" hidden>Retry</button></div>
+  <b id="npShow">Urban Kanto Radio</b>
+  <span id="npTrack"></span>
+ </div>
+ <div class="vol"><label class="sr" for="vol">Volume</label><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z M15 8q5 4 0 8 M18 5q8 7 0 14"/></svg><input id="vol" type="range" min="0" max="100" value="70"></div>
+</div></div>
+
+<script>
+// Move the existing feature, preserving one DOM copy and the keyboard reading order.
+(()=>{const mobile=matchMedia('(max-width:650px)'),feature=document.querySelector('#sessions'),dispatch=document.querySelector('#dispatch'),community=document.querySelector('main>#community');function arrange(){feature.parentNode.insertBefore(feature,mobile.matches?dispatch:community);}arrange();mobile.addEventListener('change',arrange);})();
+</script>
+<button id="backToTop" type="button" aria-label="Back to top" title="Back to top" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 12 6-6 6 6M12 6v14"/></svg></button>
+<script>
+(()=>{const button=document.querySelector('#backToTop');function update(){button.hidden=window.scrollY<500;}window.addEventListener('scroll',update,{passive:true});button.addEventListener('click',()=>{window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'instant':'smooth'});document.querySelector('.logo')?.focus({preventScroll:true});});update();})();
+</script>
+<script src="dispatch-data.js"></script>
+<script>
+/* ===== CONFIG: replace with real station data ===== */
+// Add only confirmed station profile URLs. Empty entries stay hidden.
+const SOCIAL_LINKS = {facebook:"https://www.facebook.com/urbankantoradio/",instagram:"https://www.instagram.com/urbankantoradio/",mixcloud:"https://www.mixcloud.com/urbankantoradio/",youtube:"https://www.youtube.com/@urbankantoradio",discord:""};
+const MIXES = []; // Guest recordings can be added when available.
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let stories=[],activeFilter="all",dispatchLoading=false;
+function safeImage(value){try{const u=new URL(value);return u.protocol==="https:"&&/^(?:[a-z0-9-]+\.)?bcbits\.com$/.test(u.hostname)?u.href:null;}catch{return null;}}
+function safeStories(data){
+ if(!Array.isArray(data?.stories))return [];
+ return data.stories.filter(s=>{try{const u=new URL(s.url);return u.protocol==="https:"&&["daily.bandcamp.com","www.bandwagon.asia","bandwagon.asia"].includes(u.hostname)&&typeof s.title==="string"&&Array.isArray(s.tags);}catch{return false;}}).slice(0,30);
+}
+const socialNames={facebook:"Facebook",instagram:"Instagram",mixcloud:"Mixcloud",youtube:"YouTube",discord:"Discord"};
+const socialHosts={facebook:["facebook.com","www.facebook.com"],instagram:["instagram.com","www.instagram.com"],mixcloud:["mixcloud.com","www.mixcloud.com"],youtube:["youtube.com","www.youtube.com"],discord:["discord.gg","discord.com"]};
+const socialEntries=Object.entries(SOCIAL_LINKS).filter(([key,value])=>{try{const url=new URL(value);return url.protocol==="https:"&&socialHosts[key]?.includes(url.hostname);}catch{return false;}});
+$("#socialLinks").innerHTML=socialEntries.map(([key,url])=>`<li><a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${socialNames[key]} ↗<span class="sr"> (new tab)</span></a></li>`).join("");
+$("#socialSection").hidden=socialEntries.length===0;
+function renderStories(filter=activeFilter){
+ activeFilter=filter;
+ const selected=stories.filter(s=>filter==="all"||s.tags.includes(filter));
+ const dateLabel=value=>{const date=new Date(value);return Number.isNaN(date.valueOf())?"":date.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"});};
+ $("#dispatchGrid").innerHTML=selected.length?selected.map((s,i)=>`<article class="dispatch-card" style="--story-color:${["#7a2e0e","#2c3a4a","#3d4a2c"][i%3]}"><div class="story-art" aria-hidden="true">${safeImage(s.image)?`<img class="story-photo" src="${esc(safeImage(s.image))}" alt="" loading="lazy" decoding="async" width="640" height="400" referrerpolicy="no-referrer">`:""}<span class="mono">UKR / DISPATCH</span><strong>${s.tags.includes("pinoy")?"PH":"33⅓"}</strong><span class="mono">${esc(s.type||"Music discovery")}</span></div><div class="story-copy"><div class="story-meta"><span class="tag">${s.tags.includes("pinoy")?"Pinoy scene":s.tags.includes("releases")?"Releases":"Worldwide"}</span><time class="mono mute" datetime="${esc(s.date)}">${esc(dateLabel(s.date))}</time></div><h3><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.title)}<span class="sr"> (opens on ${esc(s.source)} in a new tab)</span></a></h3><p class="story-source">${esc(s.source)}${s.author&&s.author!==s.source?" · "+esc(s.author):""}</p><a class="mono story-read" href="${esc(s.url)}" target="_blank" rel="noopener noreferrer" aria-label="Read ${esc(s.title)} on ${esc(s.source)} (new tab)">Read on ${esc(s.source)} ↗</a></div></article>`).join(""):`<div class="feed-empty"><h3>${filter==="pinoy"?"Local stories on the way.":"More discoveries soon."}</h3><p>${filter==="pinoy"?"No Filipino stories match the current feed. We’re keeping this corner open for sourced local coverage.":"No matching headlines are available right now. Check back soon or explore the source."}</p><a class="btn" href="https://daily.bandcamp.com/" target="_blank" rel="noopener noreferrer">Explore Bandcamp Daily ↗</a></div>`;
+ $("#storyCount").textContent=`${selected.length} stories available`;
+ $("#moreStories").hidden=selected.length<=2;
+
+}
+$("#moreStories").addEventListener("click",()=>{
+ const expanded=$("#moreStories").getAttribute("aria-expanded")!=="true";
+ $("#dispatchGrid").classList.toggle("expanded",expanded);
+ $("#moreStories").setAttribute("aria-expanded",String(expanded));
+ $("#moreStories").textContent=expanded?"Fewer discoveries":"More discoveries";
+});
+function applyFeed(data,cached=false){
+ const nextStories=safeStories(data);
+ if(JSON.stringify(nextStories)!==JSON.stringify(stories)){stories=nextStories;renderStories();}
+ const date=new Date(data.updatedAt||NaN),stamp=Number.isNaN(date.valueOf())?"":date.toLocaleString(undefined,{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"});
+ $("#feedStatus").textContent=stories.length?`Bandcamp + Bandwagon · ${cached||data.stale?"Saved headlines":"Updated"}${stamp?" · "+stamp:""}`:"Feed temporarily unavailable · visit Bandcamp Daily";
+}
+$$("[data-filter]").forEach(button=>button.addEventListener("click",()=>{
+ $$("[data-filter]").forEach(b=>b.setAttribute("aria-pressed",String(b===button)));renderStories(button.dataset.filter);
+}));
+if(window.DISPATCH_SNAPSHOT)applyFeed(window.DISPATCH_SNAPSHOT,true);else renderStories();
+async function loadDispatch(){
+ if(dispatchLoading)return;
+ if(!/^https?:$/.test(location.protocol)){if(!window.DISPATCH_SNAPSHOT)$("#feedStatus").textContent="Start the local preview server to load headlines";return;}
+ dispatchLoading=true;
+ const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),20000);
+ try{const response=await fetch("/api/dispatch",{signal:controller.signal});if(!response.ok)throw Error("Feed unavailable");applyFeed(await response.json());}
+ catch{$("#feedStatus").textContent=stories.length?"Saved headlines · refresh unavailable":"Headlines unavailable · visit Bandcamp Daily";}
+ finally{clearTimeout(timeout);dispatchLoading=false;}
+}
+$("#dispatchGrid").addEventListener("error",event=>{if(event.target.matches?.(".story-photo"))event.target.remove();},true);
+loadDispatch();
+setInterval(()=>{if(!document.hidden)loadDispatch();},5*60*1000);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)loadDispatch();});
+
+/* Nav + newsletter */
+const nb=$("#menuBtn"),nav=$("#nav");
+nb.addEventListener("click",()=>{const o=nav.classList.toggle("open");nb.setAttribute("aria-expanded",o);nb.textContent=o?"Close":"Menu"});
+$$("#nav a").forEach(a=>a.addEventListener("click",()=>{nav.classList.remove("open");nb.setAttribute("aria-expanded","false");nb.textContent="Menu"}));
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&nav.classList.contains("open")){nav.classList.remove("open");nb.setAttribute("aria-expanded","false");nb.textContent="Menu";nb.focus();}});
+$("#news").addEventListener("submit",e=>{e.preventDefault();const v=$("#em").value.trim();$("#nmsg").textContent=/^\S+@\S+\.\S+$/.test(v)?"Thanks. This demo form does not send anything yet.":"Enter a valid email address."});
+</script>
+<script src="player-loader.js"></script>
+<script src="events-data.js"></script>
+<script src="events.js"></script>
+<script src="navigation.js"></script><script src="pwa.js" defer></script>
+</body>
+</html>

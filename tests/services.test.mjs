@@ -1,0 +1,36 @@
+import test from 'node:test';import assert from 'node:assert/strict';import webpush from 'web-push';
+import {createHandler as liveHandler} from '../netlify/functions/live-state.mjs';
+import {createHandler as subscriptionHandler} from '../netlify/functions/push-subscriptions.mjs';
+import {validSubscription,sendLiveNotification} from '../netlify/functions/_lib/ukr-push.mjs';
+import {sessionCookie,admin,readJSON} from '../netlify/functions/_lib/ukr-security.mjs';
+function store(){const rows=new Map();let rev=0;return {rows,async get(k){return rows.get(k)?.data??null},async getWithMetadata(k){return rows.get(k)??null},async setJSON(k,data,opts={}){const old=rows.get(k);if((opts.onlyIfNew&&old)||(opts.onlyIfMatch&&old?.etag!==opts.onlyIfMatch))return {modified:false};rows.set(k,{data,etag:String(++rev)});return {modified:true}},async delete(k){rows.delete(k)},list(options={}){const data={blobs:[...rows.keys()].filter(k=>!options.prefix||k.startsWith(options.prefix)).map(key=>({key}))};return options.paginate?(async function*(){yield data})():Promise.resolve(data)} }}
+function env(){process.env.UKR_DJ_ENABLED='true';process.env.UKR_DJ_PASSWORD='ukr-testing-only-password';process.env.UKR_DJ_SESSION_SECRET='ukr-testing-only-session-secret-at-least-32';const keys=webpush.generateVAPIDKeys();process.env.UKR_PUSH_ENABLED='true';process.env.UKR_VAPID_PUBLIC_KEY=keys.publicKey;process.env.UKR_VAPID_PRIVATE_KEY=keys.privateKey;process.env.UKR_VAPID_SUBJECT='mailto:test@example.test'}
+const subscriberKeys=webpush.generateVAPIDKeys();
+const sub=()=>({endpoint:'https://fcm.googleapis.com/fcm/send/test-only',keys:{p256dh:subscriberKeys.publicKey,auth:'B'.repeat(22)}});
+const req=(path,body,method='POST',cookie=sessionCookie(),origin='https://ukr.test')=>new Request('https://ukr.test/'+path,{method,headers:{origin,'content-type':'application/json',cookie},body:body===undefined?undefined:JSON.stringify(body)});
+test('service kill switches fail closed without opening storage',async()=>{process.env.UKR_DJ_ENABLED='false';process.env.UKR_PUSH_ENABLED='false';const fail=()=>{throw Error('must not open store')};assert.equal((await liveHandler({storeFactory:fail})(new Request('https://ukr.test/live'))).status,503);assert.equal((await subscriptionHandler(fail)(new Request('https://ukr.test/push'))).status,503);assert.equal((await sendLiveNotification({})).skipped,true)});
+test('DJ mutations reject foreign origins, missing auth, malformed JSON and unknown profiles',async()=>{env();const h=liveHandler({storeFactory:store});assert.equal((await h(req('live',{},'POST','', 'https://evil.test'))).status,403);assert.equal((await h(req('live',{},'POST',''))).status,401);assert.equal((await h(req('live',null))).status,400);assert.equal((await h(req('live',{djId:'invented',show:'invented'}))).status,400)});
+test('session signature and expiry cannot be forged',()=>{env();const cookie=sessionCookie();assert.equal(admin(req('live',{},'POST',cookie)),true);assert.equal(admin(req('live',{},'POST',cookie.replace('ukr_dj_session=','ukr_dj_session=x'))),false);process.env.UKR_DJ_SESSION_SECRET='';assert.equal(admin(req('live',{},'POST',cookie)),false)});
+test('live CAS suppresses duplicate concurrent alerts; Stop persists offline',async()=>{env();const db=store();let notices=0;const h=liveHandler({storeFactory:()=>db,profiles:[{id:'fixture',name:'Fixture DJ',shows:['Fixture Show']}],notify:async()=>{notices++;return {sent:0}}});const body={djId:'fixture',show:'Fixture Show'};const responses=await Promise.all([h(req('live',body)),h(req('live',body))]);assert.ok(responses.every(r=>r.status===200));assert.equal(notices,1);assert.equal((await h(req('live',undefined,'DELETE'))).status,200);assert.equal((await db.get('current')).isLive,false)});
+test('DJ login protection limits attempts in durable isolated storage',async()=>{env();const db=store(),h=liveHandler({storeFactory:()=>db});for(let i=0;i<5;i++)assert.equal((await h(req('live',{action:'login',password:'wrong'}),{ip:'test-only'})).status,401);assert.equal((await h(req('live',{action:'login',password:'wrong'}),{ip:'test-only'})).status,429)});
+test('push endpoints reject SSRF targets and require an unsubscribe capability',async()=>{env();assert.equal(validSubscription(sub()),true);for(const endpoint of ['http://127.0.0.1/private','https://fcm.googleapis.com.evil.test/x','https://user:pass@fcm.googleapis.com/x'])assert.equal(validSubscription({...sub(),endpoint}),false);const db=store(),h=subscriptionHandler(()=>db);const saved=await(await h(req('push',{subscription:sub()}))).json();assert.equal(saved.ok,true);assert.equal(db.rows.size,1);assert.equal((await h(req('push',{subscription:sub()},'DELETE'))).status,403);assert.equal((await h(req('push',{subscription:sub(),manageToken:saved.manageToken},'DELETE'))).status,200);assert.equal(db.rows.size,0)});
+test('push cleanup removes expired test subscribers without touching healthy records',async()=>{env();const db=store();await db.setJSON('expired',{subscription:sub()});const result=await sendLiveNotification({djName:'Fixture',show:'Fixture'},{store:db,send:async()=>{throw Object.assign(Error('expired'),{statusCode:410})}});assert.equal(result.expired,1);assert.equal(db.rows.size,0)});
+test('bounded JSON rejects streamed oversized bodies',async()=>{await assert.rejects(readJSON(req('x',{body:'x'.repeat(9000)})),/large/);await assert.rejects(readJSON(req('x',[])),/Object/)});
+
+test('requests require identity, a live DJ and cooldown; inbox reads require DJ auth',async()=>{
+ env();process.env.UKR_REQUESTS_ENABLED='true';const {createHandler}=await import('../netlify/functions/requests.mjs');const db=store();let isLive=false;
+ const h=createHandler({storeFactory:()=>db,liveFactory:()=>({get:async()=>({isLive,djId:'fixture'})}),identify:async()=> 'fixture-user'});
+ const body={kind:'request',nickname:'Fixture Listener',song:'Fixture song'};
+ assert.equal((await h(req('requests',body))).status,409);isLive=true;
+ assert.equal((await h(req('requests',body))).status,201);assert.equal((await h(req('requests',body))).status,429);
+ assert.equal((await h(req('requests',undefined,'GET',''))).status,401);
+ const inbox=await(await h(req('requests',undefined,'GET'))).json();assert.equal(inbox.requests.length,1);assert.equal(inbox.requests[0].song,'Fixture song');
+ const denied=createHandler({identify:async()=>null});assert.equal((await denied(req('requests',body))).status,401);
+});
+test('metadata adapter coalesces concurrent requests and normalizes AzuraCast safely',async()=>{
+ const {default:handler,normalize}=await import('../netlify/functions/now-playing.mjs?test-metadata');
+ assert.equal(normalize({now_playing:{song:{artist:'Fixture',title:'Song'}}}).title,'Song');
+ const previous=globalThis.fetch;process.env.UKR_METADATA_URL='https://stream.example.test/api/nowplaying';let calls=0;
+ globalThis.fetch=async()=>{calls++;await new Promise(r=>setTimeout(r,5));return Response.json({now_playing:{song:{artist:'Fixture',title:'Song'}}})};
+ try{const results=await Promise.all(Array.from({length:50},()=>handler(new Request('https://ukr.test/metadata'))));assert.ok(results.every(r=>r.status===200));assert.equal(calls,1);assert.equal((await(await results[0].json()).title),'Song');}finally{globalThis.fetch=previous;delete process.env.UKR_METADATA_URL}
+});

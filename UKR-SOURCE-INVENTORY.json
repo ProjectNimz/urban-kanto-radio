@@ -1,0 +1,53 @@
+{
+  "date": "2026-10-27",
+  "referenceCandidate": "fe90c3e590118dac3db11098a7e89ac2f2129f110a3d82d065726ba811769003",
+  "sources": [
+    {
+      "path": "C:\\Users\\tenke\\OneDrive\\Desktop\\MSR\\TAMBAYAN-RADIO\\radio-player.js",
+      "sha256": "3c6fbd1db8e9a1c01fdca08c733374f6c15dd708fc504f7e8d6d2b7317db6bb0",
+      "bytes": 15296
+    },
+    {
+      "path": "C:\\Users\\tenke\\OneDrive\\Desktop\\MSR\\TAMBAYAN-RADIO\\scripts\\test-player-recovery.cjs",
+      "sha256": "fe453ac475125724ba6613cb45b30763a3dadfb7ec08add302a4479d1dfe05e4",
+      "bytes": 5121
+    },
+    {
+      "path": "C:\\Users\\tenke\\OneDrive\\Desktop\\MSR\\TAMBAYAN-RADIO\\msr-fix-verification\\browser-recovery.json",
+      "sha256": "ae379b2eee6e82bd084f876edd8579738e1c15bd4dd2bd48d0ee97324c30fbc0",
+      "bytes": 48583
+    },
+    {
+      "path": "C:\\Projects\\TAMBAYAN-RADIO\\pwa-player.js",
+      "sha256": "835f346082aae53b8f53c4dfbed7a3706378ddb82719f69625de1f7ca0db01d7",
+      "bytes": 39761
+    },
+    {
+      "path": "C:\\Projects\\TAMBAYAN-RADIO\\pwa-chat.js",
+      "sha256": "f2fb78831ce6568f5f7f603ddd3d153c3f7bdd9018db4294eea1f4ce9cb246d6",
+      "bytes": 58479
+    },
+    {
+      "path": "C:\\Projects\\TAMBAYAN-RADIO\\performance-utils.js",
+      "sha256": "423dc17c4d72c9838fecad91cfa8cc029aa17e903fd0e3fcb3ca727cea8183e6",
+      "bytes": 4057
+    },
+    {
+      "path": "C:\\Projects\\TAMBAYAN-RADIO\\sw.js",
+      "sha256": "182346ce77e79fc276f55d3b05c5c5ac61945ab4ec96b9ae70c8043ba1e95297",
+      "bytes": 3892
+    },
+    {
+      "path": "C:\\Projects\\TAMBAYAN-RADIO\\supabase-chat.sql",
+      "sha256": "6b77c2425ea407ccea4e598dc6b21a1bcb44cde437da989893f8779f95476e98",
+      "bytes": 9851
+    }
+  ],
+  "adoption": {
+    "operatorAuthorization": "User said Okay continue after local-source hash mismatch and eight passing regressions were explained.",
+    "referencePath": "C:\\Users\\tenke\\OneDrive\\Desktop\\MSR\\TAMBAYAN-RADIO\\radio-player.js",
+    "referenceSha256": "3c6fbd1db8e9a1c01fdca08c733374f6c15dd708fc504f7e8d6d2b7317db6bb0",
+    "ukrPlayerSha256": "6e46cdf44d52491b3cc8908d4e5a43d997b9b4639b663f1c019c0241c5e3c89b",
+    "exactBriefCandidateFound": false
+  }
+}

@@ -10,16 +10,22 @@
   "description": "Local roots. Global rhythm.",
   "icons": [
     {
-      "src": "/assets/ukr-pwa-192.png",
+      "src": "/assets/ukr-app-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/assets/ukr-pwa-512.png",
+      "src": "/assets/ukr-app-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
+    },
+    {
+      "src": "/assets/ukr-app-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }

@@ -1,11 +1,9 @@
-# Kanto Events — hip-hop only
+# Kanto Events — the four elements of hip-hop
 
-Publish only Philippine rap performances, cyphers/battles, beat/producer showcases and hip-hop DJ nights. General R&B, pop, indie, jazz, and unrelated club events do not qualify. Removed the previously listed Another Level and Malcolm Todd shows because their verified listings did not establish a hip-hop event.
+Include Philippine rap performances and cyphers, breaking battles and workshops, hip-hop DJ/turntablist events, producer showcases, and graffiti jams or street-art gatherings. General pop, unrelated club nights, and unrelated art/dance events do not qualify.
 
-Search widely, but require official venue, organizer or ticket evidence for date, location, lineup AND hip-hop relevance before publishing. Do not infer genre solely from artist popularity or an event aggregator. Do not pad empty slots. No verified qualifying dates are currently published.
+Require official organizer, venue or ticket evidence for date, location, participants and relevance before publishing. Do not pad empty slots or automatically infer events from news stories. Listings remain manually reviewed; no unattended event scraper is configured.
 
-Add records to events-data.js with genre: 'hip-hop', status: 'upcoming', and type: 'Rap / Live', 'Cypher / Battle', 'Beats / Producers', or 'Hip-hop DJ Night'. Include title, city, location, venue, dates (YYYY-MM-DD Manila calendar dates), lineup, summary, price, source, sourceUrl, ticketUrl, checked. Extend the allowlist in events.js only for verified official domains. Never invent prices or start times.
+Use genre: 'hip-hop', status: 'upcoming', and one of: 'Rap / Live', 'Cypher / Battle', 'Beats / Producers', 'Hip-hop DJ Night', 'Breaking / Battle', 'DJ / Turntablism', 'Graffiti / Jam'. Include title, city, location, venue, dates (YYYY-MM-DD Manila dates), lineup, summary, price, source, sourceUrl and checked. ticketUrl is optional; free events can link to the verified sourceUrl instead. Extend events.js domain allowlist only after verifying an official source. Never invent prices or start times.
 
-Cancelled/postponed records stay out of upcoming lists. Dates expire after their Manila calendar day. Discovery and verification are manual; no automatic scraping or monitoring is configured. npm run build prepares both pages.
-
-Homepage cards show up to four upcoming events. Optional image must be an HTTPS poster URL cleared for use; omit it for the branded fallback. Keep important poster text away from edges because card thumbnails crop to 16:9. Full details remain on the event guide and official ticket page.
+Cancelled/postponed dates stay out of upcoming lists. Dates expire after their Manila calendar day. Poster images are optional HTTPS URLs cleared for use; without them, cards use UKR artwork. Homepage slots without listings invite submissions for each element; these are invitations, not scheduled events.

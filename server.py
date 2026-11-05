@@ -12,6 +12,28 @@ TTL = 1800
 LOCK = threading.Lock()
 CACHE = None
 PATTERN = re.compile(r"hip[ -]?hop|rap(?:per|ping)?\b|boom[ -]?bap|beat(?:maker|making| tape|s)\b|neo[ -]?soul|soul(?:ful)?\b|jazz|instrumental|shabazz", re.I)
+
+CULTURE_SOURCES = [
+    ("B-Boy & B-Girl Dojo", "https://bboydojo.com/feed/", ("bboydojo.com", "www.bboydojo.com"), "breaking", "Breaking guides"),
+    ("StreetArtNews", "https://streetartnews.net/feed", ("streetartnews.net", "www.streetartnews.net"), "graffiti", "Graffiti & street art"),
+    ("DJ Mag", "https://djmag.com/rss.xml", ("djmag.com", "www.djmag.com"), "djing", "DJing & turntablism"),
+]
+def culture_tags(value):
+    patterns={"rap":r"\b(?:hip[ -]?hop|rap|rapper|rapping|boom[ -]?bap|emcee|mc)\b", "breaking":r"\b(?:breaking|breakdanc(?:e|ing)|b[ -]?(?:boy|girl)s?|power ?moves?|footwork|breakin)\b", "djing":r"\b(?:dj(?:ing)?|turntabli\w*|scratch(?:ing)?|vinyl|beat ?juggl\w*|dmc|mixing|beatmak\w*)\b", "graffiti":r"\b(?:graffiti|street[ -]?art|mural\w*|aerosol art|graff|tagging)\b"}
+    return [key for key,pattern in patterns.items() if re.search(pattern,value,re.I)]
+def parse_culture(raw,source):
+    name,_,hosts,topic,kind=source
+    doc=ET.fromstring(raw);stories=[];seen=set()
+    for item in doc.findall("./channel/item"):
+        title=item.findtext("title", "").strip();url=item.findtext("link", "").strip();parsed=urlsplit(url)
+        if not title or parsed.scheme!="https" or parsed.hostname not in hosts or parsed.username or parsed.password or url in seen:continue
+        intro=re.sub(r"<[^>]*>"," ",item.findtext("description", ""))[:900]
+        if topic=="djing" and not re.search(r"hip[ -]?hop|turntabli\w*|scratch(?:ing)?|beat ?juggl\w*|\bdmc\b|vinyl|rap\b",title+" "+intro,re.I):continue
+        seen.add(url);tags=["worldwide",topic]
+        if re.search(r"filipin|philippines|pinoy|manila|cebu|davao",title+" "+intro,re.I):tags.append("pinoy")
+        stories.append(dict(title=title,url=url,date=item.findtext("pubDate",""),source=name,author=item.findtext("{http://purl.org/dc/elements/1.1/}creator",name),tags=tags,type=kind,image=None))
+    return stories[:10]
+
 def parse_feed(raw):
     doc = ET.fromstring(raw)
     stories, seen = [], set()
@@ -33,6 +55,7 @@ def parse_feed(raw):
         tags = ["worldwide"]
         if re.search(r"filipin|philippines|pinoy|manila|cebu", text, re.I): tags.append("pinoy")
         if any(re.search(r"release|album|review", c, re.I) for c in categories) or "/album-of-the-day/" in link: tags.append("releases")
+        tags.extend(culture_tags(text))
         stories.append(dict(image=image,title=title,url=link,date=item.findtext("pubDate", ""),author=item.findtext("{http://purl.org/dc/elements/1.1/}creator", "Bandcamp Daily"),source="Bandcamp Daily",tags=tags,type=categories[0] if categories else "Music discovery"))
     return stories[:18]
 def parse_bandwagon(raw):
@@ -42,12 +65,13 @@ def parse_bandwagon(raw):
         title=item.findtext("a:title","",ns).strip()
         html=item.findtext("a:content","",ns) or item.findtext("a:summary","",ns)
         intro=re.sub(r"<[^>]*>"," ",html)[:700]
-        if not re.search(r"filipin|philippines|pinoy|manila|cebu|ben(?:&|&amp;)ben",title+" "+intro,re.I): continue
+        if not re.search(r"filipin|philippines|pinoy|manila|cebu|davao",title+" "+intro,re.I): continue
+        if not PATTERN.search(title+" "+intro) and not culture_tags(title+" "+intro):continue
         links=item.findall("a:link",ns)
         link=next((v.get("href","") for v in links if v.get("rel","alternate")=="alternate"),"")
         parsed=urlsplit(link)
         if parsed.scheme!="https" or parsed.hostname not in ("www.bandwagon.asia","bandwagon.asia") or link in seen: continue
-        seen.add(link); tags=["pinoy"]
+        seen.add(link); tags=["pinoy"]+culture_tags(title+" "+intro)
         if re.search(r"release|album|single|ep\b",title,re.I):tags.append("releases")
         stories.append(dict(title=title,url=link,date=item.findtext("a:published","",ns) or item.findtext("a:updated","",ns),author=item.findtext("a:author/a:name","Bandwagon",ns),source="Bandwagon",tags=tags,type="Philippine music",image=None))
     return stories[:12]
@@ -61,7 +85,7 @@ def get_feed():
                 try: previous=json.loads((ROOT/"dispatch-cache.json").read_text(encoding="utf-8"))
                 except (OSError,ValueError): previous={"stories":[]}
             stories=[]; statuses=[]
-            for name,url,parse in [("Bandcamp Daily",FEED,parse_feed),("Bandwagon","https://www.bandwagon.asia/feeds/articles.atom",parse_bandwagon)]:
+            for name,url,parse in [("Bandcamp Daily",FEED,parse_feed),("Bandwagon","https://www.bandwagon.asia/feeds/articles.atom",parse_bandwagon)]+[(source[0],source[1],lambda raw,source=source:parse_culture(raw,source)) for source in CULTURE_SOURCES]:
                 try:
                     req=Request(url,headers={"User-Agent":"Mozilla/5.0 (compatible; UrbanKantoRadio/1.0; RSS reader)"})
                     with urlopen(req,timeout=12) as response: raw=response.read(2_000_001)
@@ -78,7 +102,14 @@ def get_feed():
                     try:return parsedate_to_datetime(story["date"]).timestamp()
                     except (ValueError,TypeError):return 0
             stories.sort(key=stamp,reverse=True)
-            data=dict(stories=stories[:30],updatedAt=datetime.now(timezone.utc).isoformat(),stale=any(v["stale"] for v in statuses),sources=statuses)
+            selected=stories[:30]
+            for source in CULTURE_SOURCES:
+                item=next((v for v in stories if v["source"]==source[0]),None)
+                if item and not any(v["source"]==source[0] for v in selected):
+                    index=next((i for i in range(len(selected)-1,-1,-1) if selected[i]["source"] not in [v[0] for v in CULTURE_SOURCES]),None)
+                    if index is not None:selected[index]=item
+            selected.sort(key=stamp,reverse=True)
+            data=dict(stories=selected,updatedAt=datetime.now(timezone.utc).isoformat(),stale=any(v["stale"] for v in statuses),sources=statuses)
             CACHE = (time.time(), data)
             try:
                 (ROOT/"dispatch-cache.json").write_text(json.dumps(data,ensure_ascii=False), encoding="utf-8")

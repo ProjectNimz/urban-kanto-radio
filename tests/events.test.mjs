@@ -6,3 +6,10 @@ test('published records are hip-hop only; unrelated music is excluded',()=>{for(
 test('Manila midnight expiry removes past dates but retains second night',()=>{const result=api.upcoming([fixture],new Date('2026-11-11T16:00:00Z'));assert.equal(result[0].dates.length,1);assert.equal(result[0].dates[0],'2026-11-12');assert.equal(api.upcoming([fixture],new Date('2026-11-27T16:00:00Z')).length,0);});
 test('cancelled and unsafe events never appear',()=>{assert.equal(api.upcoming([{...fixture,status:'cancelled'}],new Date('2026-10-25')).length,0);assert.equal(api.safeURL('https://www.ticketnet.com.ph.evil.test'),null);assert.equal(api.safeURL('javascript:alert(1)'),null);});
 test('both built pages parse and include local event assets',()=>{for(const page of ['index.html','events.html']){const html=fs.readFileSync(new URL('../'+page,import.meta.url),'utf8');for(const match of html.matchAll(/<script>([\s\S]*?)<\/script>/g))new vm.Script(match[1]);assert.ok(html.includes('events-data.js'));assert.ok(html.includes('events.js'));}});
+
+test('breaking, turntablism and graffiti events accept verified free-event sources',()=>{
+ for(const type of ['Breaking / Battle','DJ / Turntablism','Graffiti / Jam']){
+  const items=api.upcoming([{...fixture,type,ticketUrl:undefined}],new Date('2026-10-25'));
+  assert.equal(items.length,1,type);
+ }
+});

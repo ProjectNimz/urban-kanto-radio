@@ -522,13 +522,13 @@ body.ukr-route-open{overflow:hidden}
 </div></section>
 
 <section id="dispatch"><div class="wrap">
- <div class="head"><div><p class="eyebrow">Notes from the underground</p><h2>Kanto Dispatch</h2></div><p class="mute section-intro">Filipino roots. Worldwide ears. Releases, discoveries, and the scenes moving music forward.</p></div>
- <div class="dispatch-toolbar"><div class="filters" role="group" aria-label="Filter Dispatch stories"><button aria-pressed="true" data-filter="all">All stories</button><button aria-pressed="false" data-filter="pinoy">Pinoy scene</button><button aria-pressed="false" data-filter="worldwide">Worldwide</button><button aria-pressed="false" data-filter="releases">Releases</button></div><span class="mono mute" id="feedStatus" role="status">Loading music headlines…</span></div>
+ <div class="head"><div><p class="eyebrow">Notes from the underground</p><h2>Kanto Dispatch</h2></div><p class="mute section-intro">Filipino roots. Worldwide ears. Rap, breaking, DJing, and graffiti. Stories from every corner of the culture.</p></div>
+ <div class="dispatch-toolbar"><div class="filters" role="group" aria-label="Filter Dispatch stories"><button aria-pressed="true" data-filter="all">All stories</button><button aria-pressed="false" data-filter="pinoy">Pinoy scene</button><button aria-pressed="false" data-filter="worldwide">Worldwide</button><button aria-pressed="false" data-filter="rap">Rap</button><button aria-pressed="false" data-filter="breaking">Breaking</button><button aria-pressed="false" data-filter="djing">DJing</button><button aria-pressed="false" data-filter="graffiti">Graffiti</button></div><span class="mono mute" id="feedStatus" role="status">Loading culture stories…</span></div>
  <p id="storyCount" class="sr" role="status"></p><div class="dispatch-grid" id="dispatchGrid"></div><button class="btn mobile-more" id="moreStories" aria-expanded="false" aria-controls="dispatchGrid" hidden>More discoveries</button>
  <noscript><p>Read music discoveries at <a href="https://daily.bandcamp.com/">Bandcamp Daily</a> and <a href="https://www.bandwagon.asia/">Bandwagon</a>. Enable JavaScript for the latest headlines.</p></noscript>
 </div></section>
 
-<section id="events"><div class="wrap"><div class="head"><div><p class="eyebrow">Out of the headphones. Into the city.</p><h2>Kanto Events</h2></div><a class="btn" href="events.html">See all events ↗</a></div><div class="dispatch-grid" id="eventPicks"></div><p class="event-note">Philippine hip-hop gigs, cyphers, beat showcases, and hip-hop DJ nights, checked against official sources. Independent listings, not Urban Kanto productions. Always check the organizer for changes. <a href="mailto:urbankantoradio@gmail.com?subject=Kanto%20Events%20submission">Promoting a show? Send us the date, venue, lineup, official link, and poster.</a> Submissions are reviewed before listing.</p><noscript><p><a href="events.html">Visit the event guide</a> for official event sources.</p></noscript></div></section>
+<section id="events"><div class="wrap"><div class="head"><div><p class="eyebrow">Out of the headphones. Into the city.</p><h2>Kanto Events</h2></div><a class="btn" href="events.html">See all events ↗</a></div><div class="dispatch-grid" id="eventPicks"></div><p class="event-note">Philippine rap shows, breaking battles, DJ showcases, and graffiti jams, checked against official sources. Independent listings, not Urban Kanto productions. Always check the organizer for changes. <a href="mailto:urbankantoradio@gmail.com?subject=Kanto%20Events%20submission">Running a show, battle, or jam? Send us the date, venue, lineup, official link, and poster.</a> Submissions are reviewed before listing.</p><noscript><p><a href="events.html">Visit the event guide</a> for official event sources.</p></noscript></div></section>
 
 
 
@@ -549,7 +549,7 @@ body.ukr-route-open{overflow:hidden}
  <div class="def">Kanto<small>/kan·to/ Filipino, noun: street corner</small></div>
  <div>
   <p>In the Philippines, the kanto is the corner where neighbors gather: a place to trade stories, share food, and hear something new coming from a speaker down the block.</p>
-  <p>Urban Kanto Radio is an independent online station built on that idea. We play underground hip-hop, soul, jazz, R&amp;B, and the DJ sets that connect them, and we welcome listeners from every city.</p>
+  <p>Urban Kanto Radio is an independent online station built on that idea. Music is our starting point. We cover rap, breaking, DJing, and graffiti—the people and communities keeping hip-hop moving. Local roots, with room for voices from every city.</p>
   <p class="mute mono">Music first. Community always. Built for curious ears, wherever you call home.</p>
  </div>
 </div></section>
@@ -591,11 +591,13 @@ const SOCIAL_LINKS = {facebook:"https://www.facebook.com/urbankantoradio/",insta
 const MIXES = []; // Guest recordings can be added when available.
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const cultureSources={breaking:{url:'https://bboydojo.com/',name:'B-Boy & B-Girl Dojo'},graffiti:{url:'https://streetartnews.net/',name:'StreetArtNews'},djing:{url:'https://djmag.com/',name:'DJ Mag'},rap:{url:'https://daily.bandcamp.com/',name:'Bandcamp Daily'}};
+const cultureLabel=s=>s.tags.includes('breaking')?'Breaking':s.tags.includes('graffiti')?'Graffiti':s.tags.includes('djing')?'DJing':s.tags.includes('rap')?'Rap':s.tags.includes('pinoy')?'Pinoy scene':'Music';
 let stories=[],activeFilter="all",dispatchLoading=false;
 function safeImage(value){try{const u=new URL(value);return u.protocol==="https:"&&/^(?:[a-z0-9-]+\.)?bcbits\.com$/.test(u.hostname)?u.href:null;}catch{return null;}}
 function safeStories(data){
  if(!Array.isArray(data?.stories))return [];
- return data.stories.filter(s=>{try{const u=new URL(s.url);return u.protocol==="https:"&&["daily.bandcamp.com","www.bandwagon.asia","bandwagon.asia"].includes(u.hostname)&&typeof s.title==="string"&&Array.isArray(s.tags);}catch{return false;}}).slice(0,30);
+ return data.stories.filter(s=>{try{const u=new URL(s.url);return u.protocol==="https:"&&["daily.bandcamp.com","www.bandwagon.asia","bandwagon.asia","bboydojo.com","www.bboydojo.com","streetartnews.net","www.streetartnews.net","djmag.com","www.djmag.com"].includes(u.hostname)&&typeof s.title==="string"&&Array.isArray(s.tags);}catch{return false;}}).slice(0,30);
 }
 const socialNames={facebook:"Facebook",instagram:"Instagram",mixcloud:"Mixcloud",youtube:"YouTube",discord:"Discord"};
 const socialHosts={facebook:["facebook.com","www.facebook.com"],instagram:["instagram.com","www.instagram.com"],mixcloud:["mixcloud.com","www.mixcloud.com"],youtube:["youtube.com","www.youtube.com"],discord:["discord.gg","discord.com"]};
@@ -604,9 +606,10 @@ $("#socialLinks").innerHTML=socialEntries.map(([key,url])=>`<li><a href="${esc(u
 $("#socialSection").hidden=socialEntries.length===0;
 function renderStories(filter=activeFilter){
  activeFilter=filter;
+ const source=cultureSources[filter]||{url:'https://daily.bandcamp.com/',name:'Bandcamp Daily'};
  const selected=stories.filter(s=>filter==="all"||s.tags.includes(filter));
  const dateLabel=value=>{const date=new Date(value);return Number.isNaN(date.valueOf())?"":date.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"});};
- $("#dispatchGrid").innerHTML=selected.length?selected.map((s,i)=>`<article class="dispatch-card" style="--story-color:${["#7a2e0e","#2c3a4a","#3d4a2c"][i%3]}"><div class="story-art" aria-hidden="true">${safeImage(s.image)?`<img class="story-photo" src="${esc(safeImage(s.image))}" alt="" loading="lazy" decoding="async" width="640" height="400" referrerpolicy="no-referrer">`:""}<span class="mono">UKR / DISPATCH</span><strong>${s.tags.includes("pinoy")?"PH":"33⅓"}</strong><span class="mono">${esc(s.type||"Music discovery")}</span></div><div class="story-copy"><div class="story-meta"><span class="tag">${s.tags.includes("pinoy")?"Pinoy scene":s.tags.includes("releases")?"Releases":"Worldwide"}</span><time class="mono mute" datetime="${esc(s.date)}">${esc(dateLabel(s.date))}</time></div><h3><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.title)}<span class="sr"> (opens on ${esc(s.source)} in a new tab)</span></a></h3><p class="story-source">${esc(s.source)}${s.author&&s.author!==s.source?" · "+esc(s.author):""}</p><a class="mono story-read" href="${esc(s.url)}" target="_blank" rel="noopener noreferrer" aria-label="Read ${esc(s.title)} on ${esc(s.source)} (new tab)">Read on ${esc(s.source)} ↗</a></div></article>`).join(""):`<div class="feed-empty"><h3>${filter==="pinoy"?"Local stories on the way.":"More discoveries soon."}</h3><p>${filter==="pinoy"?"No Filipino stories match the current feed. We’re keeping this corner open for sourced local coverage.":"No matching headlines are available right now. Check back soon or explore the source."}</p><a class="btn" href="https://daily.bandcamp.com/" target="_blank" rel="noopener noreferrer">Explore Bandcamp Daily ↗</a></div>`;
+ $("#dispatchGrid").innerHTML=selected.length?selected.map((s,i)=>`<article class="dispatch-card" style="--story-color:${["#7a2e0e","#2c3a4a","#3d4a2c"][i%3]}"><div class="story-art" aria-hidden="true">${safeImage(s.image)?`<img class="story-photo" src="${esc(safeImage(s.image))}" alt="" loading="lazy" decoding="async" width="640" height="400" referrerpolicy="no-referrer">`:""}<span class="mono">UKR / DISPATCH</span><strong>${s.tags.includes("graffiti")?"ART":s.tags.includes("breaking")?"BRK":s.tags.includes("djing")?"DJ":s.tags.includes("pinoy")?"PH":"33⅓"}</strong><span class="mono">${esc(s.type||"Music discovery")}</span></div><div class="story-copy"><div class="story-meta"><span class="tag">${esc(cultureLabel(s))}</span><time class="mono mute" datetime="${esc(s.date)}">${esc(dateLabel(s.date))}</time></div><h3><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.title)}<span class="sr"> (opens on ${esc(s.source)} in a new tab)</span></a></h3><p class="story-source">${esc(s.source)}${s.author&&s.author!==s.source?" · "+esc(s.author):""}</p><a class="mono story-read" href="${esc(s.url)}" target="_blank" rel="noopener noreferrer" aria-label="Read ${esc(s.title)} on ${esc(s.source)} (new tab)">Read on ${esc(s.source)} ↗</a></div></article>`).join(""):`<div class="feed-empty"><h3>${filter==="pinoy"?"Local stories on the way.":"More discoveries soon."}</h3><p>${filter==="pinoy"?"No Filipino stories match the current feed. We’re keeping this corner open for sourced local coverage.":"No matching headlines are available right now. Check back soon or explore the source."}</p><a class="btn" href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">Explore ${esc(source.name)} ↗</a></div>`;
  $("#storyCount").textContent=`${selected.length} stories available`;
  $("#moreStories").hidden=selected.length<=2;
 
@@ -621,7 +624,7 @@ function applyFeed(data,cached=false){
  const nextStories=safeStories(data);
  if(JSON.stringify(nextStories)!==JSON.stringify(stories)){stories=nextStories;renderStories();}
  const date=new Date(data.updatedAt||NaN),stamp=Number.isNaN(date.valueOf())?"":date.toLocaleString(undefined,{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"});
- $("#feedStatus").textContent=stories.length?`Bandcamp + Bandwagon · ${cached||data.stale?"Saved headlines":"Updated"}${stamp?" · "+stamp:""}`:"Feed temporarily unavailable · visit Bandcamp Daily";
+ $("#feedStatus").textContent=stories.length?`Music, breaking, DJing & graffiti · ${cached||data.stale?"Saved headlines":"Updated"}${stamp?" · "+stamp:""}`:"Feed temporarily unavailable · visit Bandcamp Daily";
 }
 $$("[data-filter]").forEach(button=>button.addEventListener("click",()=>{
  $$("[data-filter]").forEach(b=>b.setAttribute("aria-pressed",String(b===button)));renderStories(button.dataset.filter);

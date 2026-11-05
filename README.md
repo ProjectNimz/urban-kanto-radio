@@ -32,3 +32,8 @@ Homepage picks and events.html share reviewed data in events-data.js. City/type 
 
 ## Technology transfer — development implementation
 See UKR-TECH-TRANSFER-REPORT.md, UKR-PERFORMANCE-REPORT.md, UKR-DEPLOYMENT-CHECKLIST.md, UKR-SHARED-TECH-REFERENCE.md and UKR-VALIDATION-RESULTS.json. The shared recovery player, persistent section navigation, community UI/client, private DJ/request backend, opt-in push architecture, local fonts/icons and offline shell are implemented. Chat, push, DJ and requests default off; stream/metadata settings remain empty. Independent infrastructure and live acceptance are still required. No deployment was performed.
+
+## Hip-hop culture coverage
+Dispatch combines Bandcamp Daily and Philippine Bandwagon stories with B-Boy & B-Girl Dojo (breaking guides), StreetArtNews (graffiti/street art), and DJ Mag filtered for hip-hop, vinyl and turntablism. Culture filters cover Rap, Breaking, DJing and Graffiti; geographic filters remain available. Sources refresh on requests using the existing 30-minute cache. Breaking guides may be older evergreen material; their original dates stay visible. RSS does not guarantee Philippine coverage of every element. Publisher-supplied art is retained only for approved image hosts; other stories use UKR artwork.
+
+Events cover all four elements but remain manually verified and submitted. No automatic extraction of event dates from news or social media is configured. See EVENTS-EDITORIAL.md.

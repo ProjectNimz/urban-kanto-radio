@@ -37,3 +37,6 @@ See UKR-TECH-TRANSFER-REPORT.md, UKR-PERFORMANCE-REPORT.md, UKR-DEPLOYMENT-CHECK
 Dispatch combines Bandcamp Daily and Philippine Bandwagon stories with B-Boy & B-Girl Dojo (breaking guides), StreetArtNews (graffiti/street art), and DJ Mag filtered for hip-hop, vinyl and turntablism. Culture filters cover Rap, Breaking, DJing and Graffiti; geographic filters remain available. Sources refresh on requests using the existing 30-minute cache. Breaking guides may be older evergreen material; their original dates stay visible. RSS does not guarantee Philippine coverage of every element. Publisher-supplied art is retained only for approved image hosts; other stories use UKR artwork.
 
 Events cover all four elements but remain manually verified and submitted. No automatic extraction of event dates from news or social media is configured. See EVENTS-EDITORIAL.md.
+
+## Chat availability
+Chat is excluded from the deployed site and offline shell. The former community page redirects to the homepage contact section. Archived chat source remains available for a possible future return; its configuration stays disabled.

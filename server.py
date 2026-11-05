@@ -131,7 +131,7 @@ class Handler(SimpleHTTPRequestHandler):
         if urlsplit(self.path).path == "/api/dispatch":
             body=json.dumps(get_feed(),ensure_ascii=False).encode()
             self.send_response(200);self.send_header("Content-Type","application/json; charset=utf-8");self.send_header("Cache-Control","no-store");self.send_header("Content-Length",str(len(body)));self.end_headers();self.wfile.write(body)
-        elif urlsplit(self.path).path.startswith(("/assets/", "/vendor/")) or urlsplit(self.path).path in ("/", "/index.html", "/dispatch-data.js", "/dispatch-cache.json", "/events.html", "/community.html", "/dj.html", "/dj-panel.js", "/notifications.js", "/community-chat.js", "/performance-utils.js", "/events-data.js", "/events.js", "/station-config.js", "/offline.html", "/radio-player.js", "/player-loader.js", "/navigation.js", "/pwa.js", "/sw.js", "/manifest.webmanifest"):
+        elif urlsplit(self.path).path.startswith(("/assets/", "/vendor/")) or urlsplit(self.path).path in ("/", "/index.html", "/dispatch-data.js", "/dispatch-cache.json", "/events.html", "/dj.html", "/dj-panel.js", "/notifications.js", "/events-data.js", "/events.js", "/station-config.js", "/offline.html", "/radio-player.js", "/player-loader.js", "/navigation.js", "/pwa.js", "/sw.js", "/manifest.webmanifest"):
             super().do_GET()
         else: self.send_error(404)
 if __name__ == "__main__":

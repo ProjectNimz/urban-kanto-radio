@@ -5,6 +5,16 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
 [[redirects]]
+  from = "/community.html"
+  to = "/#community"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/community"
+  to = "/#community"
+  status = 301
+  force = true
+[[redirects]]
   from = "/api/dispatch"
   to = "/.netlify/functions/dispatch"
   status = 200

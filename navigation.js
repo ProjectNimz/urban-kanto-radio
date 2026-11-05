@@ -2,18 +2,18 @@
  if(window.frameElement?.dataset.ukrEmbedded==='true'){
   document.addEventListener('click',event=>{
    const a=event.target.closest('a[href]');if(!a||event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey||a.target==='_blank'||a.hasAttribute('download')||a.getAttribute('href').startsWith('#'))return;
-   const url=new URL(a.href);if(url.origin!==location.origin||!['/','/index.html','/events.html','/community.html'].includes(url.pathname))return;
+   const url=new URL(a.href);if(url.origin!==location.origin||!['/','/index.html','/events.html'].includes(url.pathname))return;
    event.preventDefault();window.parent.postMessage({type:'ukr-navigate',href:url.href},location.origin);
   });return;
  }
  const header=document.querySelector('header');
  if(header){const measure=()=>document.documentElement.style.setProperty('--header-space',Math.ceil(header.getBoundingClientRect().height)+'px');measure();if('ResizeObserver' in window)new ResizeObserver(measure).observe(header);else window.addEventListener('resize',measure,{passive:true});}
  const base=new URL(location.href),main=document.querySelector('main'),footer=document.querySelector('footer'),title=document.title;
- const paths=new Set(['/','/index.html','/events.html','/community.html']);let panel,frame,opener;
+ const paths=new Set(['/','/index.html','/events.html']);let panel,frame,opener;
  function clear(){if(!panel)return;panel.remove();panel=null;frame=null;main.hidden=false;if(footer)footer.hidden=false;document.body.classList.remove('ukr-route-open');document.title=title;opener?.focus();}
  function show(url){
   clear();main.hidden=true;if(footer)footer.hidden=true;document.body.classList.add('ukr-route-open');
-  panel=document.createElement('section');panel.id='ukrRoute';panel.setAttribute('aria-label',url.pathname.includes('events')?'Kanto Events':url.pathname.includes('community')?'Kanto Community':'Urban Kanto Radio');
+  panel=document.createElement('section');panel.id='ukrRoute';panel.setAttribute('aria-label',url.pathname.includes('events')?'Kanto Events':'Urban Kanto Radio');
   const back=document.createElement('button');back.type='button';back.className='btn';back.textContent='← Back';back.addEventListener('click',()=>history.back());
   frame=document.createElement('iframe');frame.dataset.ukrEmbedded='true';frame.title=panel.getAttribute('aria-label');frame.src=url.href;
   frame.addEventListener('load',()=>{try{document.title=frame.contentDocument.title;}catch(_){}});

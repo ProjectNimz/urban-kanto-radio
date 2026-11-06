@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'ukr-shell-';
-const CACHE_NAME = CACHE_PREFIX + '20261105-6';
+const CACHE_NAME = CACHE_PREFIX + '20261105-7';
 const SHELL = ['/assets/fonts/fonts.css','/assets/ukr-pwa-192.png','/assets/ukr-pwa-512.png','/notifications.js','/assets/fonts/4ba7d3d09669.woff2','/assets/fonts/698f9960927e.woff2','/assets/fonts/9964608a8493.woff2','/assets/fonts/e1896b13b2b1.woff2','/index.html','/events.html','/station-config.js','/radio-player.js','/player-loader.js','/navigation.js','/pwa.js','/manifest.webmanifest','/dispatch-data.js','/events-data.js','/events.js','/assets/urban-kanto-logo.svg','/assets/urban-kanto-icon.svg'];
 const CORE=SHELL.filter(path=>!['/events.html','/notifications.js','/assets/ukr-pwa-192.png','/assets/ukr-pwa-512.png'].includes(path));
 CORE.push('/offline.html');SHELL.push('/assets/ukr-app-180.png','/assets/ukr-app-192.png','/assets/ukr-app-512.png','/assets/ukr-app-maskable-512.png','/offline.html','/assets/dj-koco-decks.jpg','/assets/ukr-hiphop-culture.webp','/assets/ukr-graffiti-wall.webp');

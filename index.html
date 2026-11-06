@@ -488,6 +488,15 @@ body.ukr-route-open{overflow:hidden}
 .ukr-offline-status{margin:0;padding:.6rem 1.25rem;background:var(--char);color:var(--cream);border-bottom:1px solid var(--orange);font-size:.85rem;line-height:1.5}
 .pwa-install{grid-column:1/-1;border-top:1px solid var(--line);padding-top:1rem;max-width:38rem}.pwa-install summary{cursor:pointer;min-height:44px;align-content:center;color:var(--cream);font-weight:600}.pwa-install p{font-size:.9rem;color:var(--mute)}.pwa-install .btn{margin:.5rem 0}
 @media(display-mode:standalone){.pwa-install{display:none}}
+
+/* Friends row: two compact, credited links above the footer columns. */
+.ukr-friends{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding-bottom:1.75rem;border-bottom:1px solid var(--line)}
+.ukr-friends h3{font-size:1.9rem;margin:0}.ukr-friends p{color:var(--mute);font-size:.9rem;margin:.6rem 0 0}
+.friend-logos{display:flex;gap:2rem;align-items:start}.friend-link{display:grid;justify-items:center;gap:.65rem;text-decoration:none;min-width:140px;text-align:center}
+.friend-mark{display:grid;place-items:center;width:112px;height:112px;background:var(--ink);border:1px solid var(--line);overflow:hidden;border-radius:3px}
+.friend-mark img{display:block;width:100%;height:100%;object-fit:contain}.friend-link span:last-child{font-size:.75rem;line-height:1.4;color:var(--cream)}.friend-link:hover .friend-mark{border-color:var(--orange)}
+@media(max-width:650px){.ukr-friends{display:block;padding-bottom:1.25rem}.ukr-friends h3{font-size:1.6rem}.ukr-friends p{font-size:.85rem}.friend-logos{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:1.25rem}.friend-link{min-width:0}.friend-mark{width:96px;height:96px}.friend-link span:last-child{font-size:.7rem}}
+
 </style>
 </head>
 <body id="top">
@@ -551,6 +560,7 @@ body.ukr-route-open{overflow:hidden}
 </main>
 
 <footer id="contact"><div class="wrap fgrid">
+ <div class="ukr-friends"><div><h3>Friends of UKR</h3><p>Good people. Shared culture.</p></div><div class="friend-logos"><a class="friend-link" href="https://www.youtube.com/@AnyoneCanRapLeague" target="_blank" rel="noopener noreferrer"><span class="friend-mark"><img src="assets/labels/acrl-logo.webp" alt="ACRL — Anyone Can Rap League" width="300" height="300" loading="lazy" decoding="async"></span><span>Anyone Can Rap League ↗<span class="sr"> (YouTube, new tab)</span></span></a><a class="friend-link" href="https://www.instagram.com/thirdworldrecordsph/" target="_blank" rel="noopener noreferrer"><span class="friend-mark"><img src="assets/labels/third-world-records-ph-logo.jpg" alt="Third World Records Philippines" width="150" height="150" loading="lazy" decoding="async"></span><span>Third World Records ↗<span class="sr"> (Instagram, new tab)</span></span></a></div></div>
  <div><h3>Contact</h3><ul><li><a href="mailto:urbankantoradio@gmail.com">urbankantoradio@gmail.com</a></li></ul></div>
  <div id="socialSection" hidden><h3>Follow the signal</h3><ul id="socialLinks"></ul></div>
  <div><h3>Newsletter</h3>

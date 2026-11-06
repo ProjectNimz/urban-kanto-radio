@@ -10,6 +10,7 @@ const files=new Set(['index.html','events.html','dj.html','dj-panel.js','notific
 for(const name of await readdir('assets/fonts'))if(/\.(?:woff2|css|txt)$/.test(name))files.add('assets/fonts/'+name);
 for(const size of [192,512])files.add(`assets/ukr-pwa-${size}.png`);
 for(const icon of JSON.parse(await readFile('manifest.webmanifest','utf8')).icons)files.add(icon.src.replace(/^\//,''));
+for(const match of html.matchAll(/url\(["']?(assets\/[^"')]+)["']?\)/g))files.add(match[1]);
 let bytes=0;
 for(const file of files){
  const source=resolve(root,file);

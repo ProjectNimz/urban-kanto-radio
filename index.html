@@ -443,6 +443,10 @@ footer li{overflow-wrap:anywhere}
 
 #backToTop{position:fixed;right:1rem;bottom:calc(var(--player-space,90px) + .75rem);z-index:59;width:44px;height:44px;display:grid;place-items:center;border:2px solid var(--ink);border-radius:50%;background:var(--orange);color:var(--ink);box-shadow:0 3px 12px #0005;cursor:pointer}
 #backToTop[hidden]{display:none}#backToTop:hover{background:var(--orange);color:var(--ink)}#backToTop svg{width:21px;height:21px}
+.hero{background-image:linear-gradient(90deg,rgba(18,17,16,.7),rgba(18,17,16,.2) 65%,rgba(18,17,16,.1)),url("assets/ukr-graffiti-wall.webp");background-position:center;background-size:cover}
+.hero .hero-culture-art{max-width:540px;aspect-ratio:1.1;overflow:visible;border:0}
+.hero-culture-art img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;-webkit-mask-image:radial-gradient(ellipse at center,#000 60%,transparent 75%);mask-image:radial-gradient(ellipse at center,#000 60%,transparent 75%)}
+@media(min-width:651px) and (max-width:860px){.hero .hero-culture-art{max-width:440px}}
 html.ukr-embedded #backToTop{display:none}
 html.ukr-embedded header,html.ukr-embedded footer,html.ukr-embedded #player{display:none}
 html.ukr-embedded body{padding:0}
@@ -506,19 +510,7 @@ body.ukr-route-open{overflow:hidden}
   <p>Underground hip-hop, soulful selections, and fresh discoveries. Rooted in Filipino community. Connected through music.</p>
   <div class="cta"><button class="btn pri" data-listen>Listen to the station</button><a class="btn" href="#dispatch">Explore the Dispatch ↗</a></div>
  </div>
- <div class="art" aria-hidden="true">
-  <svg class="map" viewBox="0 0 400 400" fill="none" stroke="#f2e8d5" stroke-width="1.2"><path d="M0 120h400M0 250h400M70 0v400M210 0v400M330 0v400M0 360L400 40M120 400L400 190" stroke-dasharray="2 6"/><rect x="215" y="125" width="110" height="120" stroke-dasharray="none" opacity=".4"/></svg>
-  <svg class="disc" viewBox="0 0 200 200"><defs><radialGradient id="g"><stop offset="0" stop-color="#2a2724"/><stop offset="1" stop-color="#0b0a09"/></radialGradient></defs>
-   <circle cx="100" cy="100" r="98" fill="url(#g)" stroke="#3a352f"/>
-   <g fill="none" stroke="#3a352f" stroke-width=".6"><circle cx="100" cy="100" r="90"/><circle cx="100" cy="100" r="80"/><circle cx="100" cy="100" r="70"/><circle cx="100" cy="100" r="60"/></g>
-   <path d="M100 100 L100 4 A96 96 0 0 1 180 46Z" fill="#f2e8d5" opacity=".07"/>
-   <circle cx="100" cy="100" r="40" fill="#e8651f"/>
-   <path id="arc" d="M100 100m-30 0a30 30 0 1 1 60 0a30 30 0 1 1-60 0" fill="none"/>
-   <text font-family="DM Mono,monospace" font-size="7" fill="#121110" letter-spacing="1.6"><textPath href="#arc">URBAN KANTO RADIO · SIDE A · 33⅓ RPM ·</textPath></text>
-   <circle cx="100" cy="100" r="5" fill="#121110"/></svg>
-  <div class="sign">Kanto St.</div>
-  <div class="sticker">Local roots.<br>Global rhythm.</div>
- </div>
+ <div class="art hero-culture-art"><img src="assets/ukr-hiphop-culture.webp" alt="Urban Kanto Radio, established 2026: rap, DJing, breaking and graffiti illustrated in orange and cream." width="1376" height="768" fetchpriority="high" decoding="async"></div>
 </div></section>
 
 <section id="dispatch"><div class="wrap">
